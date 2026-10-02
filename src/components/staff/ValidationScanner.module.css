@@ -1,0 +1,261 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--primary-700);
+  background-color: var(--primary-50);
+  border: 1px solid var(--primary-100);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.04em;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.resetButton {
+  padding: 8px 14px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.resetButton:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+}
+
+.feedback {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 700;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.feedback.success {
+  background-color: var(--status-available-bg);
+  border: 1px solid var(--status-available-border);
+  color: var(--status-available-text);
+}
+
+.feedback.error {
+  background-color: var(--status-exhausted-bg);
+  border: 1px solid var(--status-exhausted-border);
+  color: var(--status-exhausted-text);
+}
+
+.searchSection {
+  background-color: var(--bg-surface);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.searchLabel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.searchRow {
+  display: flex;
+  gap: 8px;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.searchInput:focus {
+  border-color: var(--primary-600);
+  outline: none;
+}
+
+.clearBtn {
+  padding: 8px 16px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.tableCard {
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.tableHeader {
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tableHeader h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.ticketList {
+  display: flex;
+  flex-direction: column;
+  divide-y: 1px solid var(--border-light);
+}
+
+.ticketRow {
+  display: grid;
+  grid-template-columns: 120px 1.5fr 1.2fr 110px 140px;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 14px var(--space-lg);
+  border-bottom: 1px solid var(--border-light);
+  transition: background-color 0.15s ease;
+}
+
+.ticketRow:hover {
+  background-color: #fafbfc;
+}
+
+.checkedRow {
+  background-color: #f0fdf4;
+}
+
+.colSlot {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.slotTag {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--primary-700);
+}
+
+.timeTag {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.colPatient {
+  display: flex;
+  flex-direction: column;
+}
+
+.patientName {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.patientMeta {
+  display: flex;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.colSpecialty {
+  display: flex;
+  flex-direction: column;
+}
+
+.specName {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.doctorName {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.checkInBtn {
+  padding: 8px 14px;
+  background-color: var(--primary-600);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.checkInBtn:hover {
+  background-color: var(--primary-700);
+}
+
+.checkedInLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--status-available-text);
+  display: inline-block;
+  padding: 6px 10px;
+  background-color: var(--status-available-bg);
+  border-radius: var(--radius-sm);
+}
+
+.noTickets {
+  padding: var(--space-2xl);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .ticketRow {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+  }
+}

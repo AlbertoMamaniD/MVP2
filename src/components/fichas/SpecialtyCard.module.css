@@ -1,0 +1,212 @@
+.card {
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border-light);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.card.available {
+  border-color: var(--status-available-border);
+}
+
+.card.few {
+  border-color: var(--status-few-border);
+  background: linear-gradient(180deg, #fffdf5 0%, var(--bg-surface) 100%);
+}
+
+.card.exhausted {
+  border-color: var(--border-light);
+  background-color: #fafafa;
+  opacity: 0.85;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.codeTag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.specialtyName {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.doctorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background-color: var(--bg-subtle);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.infoIcon {
+  font-size: 0.95rem;
+}
+
+.doctorName {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Barra de progreso de cupos */
+.quotaSection {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.quotaLabelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.82rem;
+}
+
+.quotaStatusText {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.quotaFraction {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.progressBarBg {
+  width: 100%;
+  height: 8px;
+  background-color: var(--border-light);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+.fill_available {
+  background-color: var(--primary-600);
+}
+
+.fill_few {
+  background-color: var(--status-few-dot);
+}
+
+.fill_exhausted {
+  background-color: var(--status-exhausted-dot);
+}
+
+.requirementsArea {
+  border-top: 1px dashed var(--border-light);
+  padding-top: 10px;
+}
+
+.requirementsTitle {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.requirementsList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.actionArea {
+  margin-top: auto;
+  padding-top: var(--space-sm);
+}
+
+.bookButton {
+  width: 100%;
+  padding: 12px 18px;
+  background-color: var(--primary-600);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgb(13 148 136 / 0.25);
+}
+
+.bookButton:hover {
+  background-color: var(--primary-700);
+  transform: translateY(-1px);
+}
+
+.fewButton {
+  background-color: #d97706;
+  box-shadow: 0 4px 10px rgb(217 119 6 / 0.25);
+}
+
+.fewButton:hover {
+  background-color: #b45309;
+}
+
+.exhaustedNotice {
+  background-color: var(--status-exhausted-bg);
+  border: 1px solid var(--status-exhausted-border);
+  color: var(--status-exhausted-text);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.exhaustedIcon {
+  font-size: 1.1rem;
+}

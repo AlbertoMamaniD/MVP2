@@ -1,0 +1,179 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.summaryBox {
+  background-color: var(--primary-50);
+  border: 1px solid var(--primary-100);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.summaryLabel {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.summaryValue {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.summaryValueHighlight {
+  font-weight: 800;
+  color: var(--primary-700);
+}
+
+.errorAlert {
+  background-color: var(--status-exhausted-bg);
+  border: 1px solid var(--status-exhausted-border);
+  color: var(--status-exhausted-text);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.required {
+  color: #ef4444;
+}
+
+.ciRow {
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  gap: 8px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--primary-600);
+  outline: none;
+}
+
+.extensionSelect {
+  padding: 12px 8px;
+  border: 2px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 700;
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.phoneInputWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.phonePrefix {
+  background-color: var(--bg-subtle);
+  border: 2px solid var(--border-medium);
+  border-right: none;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  padding: 12px 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.phoneInput {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.helperText {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.noticeBox {
+  background-color: #f8fafc;
+  border: 1px dashed var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.noticeIcon {
+  font-size: 1.1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: var(--space-sm);
+}
+
+.cancelButton {
+  flex: 1;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background-color: var(--bg-subtle);
+}
+
+.cancelButton:hover {
+  background-color: var(--border-light);
+}
+
+.submitButton {
+  flex: 2;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: var(--primary-600);
+  box-shadow: 0 4px 10px rgb(13 148 136 / 0.25);
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: var(--primary-700);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

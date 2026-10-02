@@ -1,0 +1,137 @@
+.header {
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: var(--shadow-sm);
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  gap: var(--space-md);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-800));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgb(13 148 136 / 0.3);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandTitle {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: -0.02em;
+}
+
+.boliviaTag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  background-color: #ef4444;
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
+}
+
+.brandSubtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.rightNav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.liveClock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--bg-subtle);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-light);
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--status-available-dot);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--status-available-dot);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+.dateText {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: capitalize;
+}
+
+.navLinks {
+  display: flex;
+  gap: 6px;
+}
+
+.navLink {
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.navLink:hover {
+  background-color: var(--primary-50);
+  color: var(--primary-700);
+}
+
+.navLink.active {
+  background-color: var(--primary-600);
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .liveClock {
+    display: none;
+  }
+
+  .brandSubtitle {
+    display: none;
+  }
+
+  .navLink {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}

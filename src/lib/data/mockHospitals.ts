@@ -1,0 +1,48 @@
+import { Hospital } from "@/types/hospital";
+
+export const MOCK_HOSPITALS: Hospital[] = [
+  {
+    id: "hosp-clinicas-lp",
+    name: "Hospital de Clínicas de La Paz",
+    city: "La Paz",
+    address: "Av. Saavedra esq. Claudio Sanjinés, Complejo Miraflores",
+    system: "SUS",
+    level: "3er Nivel (Especialidades)",
+    phone: "+591 2 2225000",
+    openingHours: "07:30 - 18:00",
+    isActive: true,
+  },
+  {
+    id: "hosp-san-juan-scz",
+    name: "Hospital San Juan de Dios",
+    city: "Santa Cruz",
+    address: "C. Cuéllar esq. España, Casco Viejo",
+    system: "SUS",
+    level: "3er Nivel (Especialidades)",
+    phone: "+591 3 3362000",
+    openingHours: "07:00 - 17:30",
+    isActive: true,
+  },
+  {
+    id: "hosp-viedma-cbba",
+    name: "Hospital Clínico Viedma",
+    city: "Cochabamba",
+    address: "Av. Aniceto Arce esq. Germán Urquidi",
+    system: "SUS",
+    level: "3er Nivel (Especialidades)",
+    phone: "+591 4 4252000",
+    openingHours: "07:00 - 18:00",
+    isActive: true,
+  },
+  {
+    id: "hosp-norte-elalto",
+    name: "Hospital del Norte",
+    city: "El Alto",
+    address: "Av. Juan Pablo II, Zona Río Seco",
+    system: "SUS",
+    level: "3er Nivel (Especialidades)",
+    phone: "+591 2 2841000",
+    openingHours: "07:30 - 17:00",
+    isActive: true,
+  },
+];

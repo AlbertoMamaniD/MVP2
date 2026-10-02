@@ -1,0 +1,63 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.success {
+  background-color: var(--status-available-bg);
+  color: var(--status-available-text);
+  border: 1px solid var(--status-available-border);
+}
+
+.success .dot {
+  background-color: var(--status-available-dot);
+  box-shadow: 0 0 6px var(--status-available-dot);
+}
+
+.warning {
+  background-color: var(--status-few-bg);
+  color: var(--status-few-text);
+  border: 1px solid var(--status-few-border);
+}
+
+.warning .dot {
+  background-color: var(--status-few-dot);
+  box-shadow: 0 0 6px var(--status-few-dot);
+}
+
+.danger {
+  background-color: var(--status-exhausted-bg);
+  color: var(--status-exhausted-text);
+  border: 1px solid var(--status-exhausted-border);
+}
+
+.danger .dot {
+  background-color: var(--status-exhausted-dot);
+}
+
+.neutral {
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+
+.info {
+  background-color: var(--primary-50);
+  color: var(--primary-700);
+  border: 1px solid var(--primary-100);
+}
