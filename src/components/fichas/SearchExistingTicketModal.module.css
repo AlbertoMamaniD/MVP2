@@ -1,0 +1,132 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.intro {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchRow {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 2px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.input:focus {
+  border-color: var(--primary-600);
+  outline: none;
+}
+
+.searchButton {
+  padding: 12px 20px;
+  background-color: var(--primary-600);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.searchButton:hover {
+  background-color: var(--primary-700);
+}
+
+.resultsArea {
+  margin-top: var(--space-sm);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.resultsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resultsCount {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ticketResultCard {
+  background-color: var(--primary-50);
+  border: 1px solid var(--primary-200);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.ticketResultMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.specName {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--primary-900);
+}
+
+.hospitalName {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.timeHighlight {
+  font-size: 0.82rem;
+  color: var(--primary-800);
+  margin-top: 4px;
+}
+
+.viewButton {
+  padding: 8px 14px;
+  background-color: var(--primary-700);
+  color: #ffffff;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.viewButton:hover {
+  background-color: var(--primary-800);
+}
+
+.notFound {
+  background-color: var(--bg-subtle);
+  border: 1px dashed var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.notFoundIcon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 6px;
+}

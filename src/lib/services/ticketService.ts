@@ -14,20 +14,24 @@ const STORAGE_KEYS = {
 export class TicketService {
   // Obtener especialidades actuales (desde localStorage o mock inicial)
   static getSpecialties(hospitalId?: string): Specialty[] {
-    if (typeof window === "undefined") {
-      return hospitalId ? MOCK_SPECIALTIES.filter((s) => s.hospitalId === hospitalId) : MOCK_SPECIALTIES;
+    let source = MOCK_SPECIALTIES;
+    if (typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEYS.SPECIALTIES);
+        if (stored) {
+          source = JSON.parse(stored);
+        }
+      } catch {
+        source = MOCK_SPECIALTIES;
+      }
     }
 
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.SPECIALTIES);
-      let list: Specialty[] = stored ? JSON.parse(stored) : MOCK_SPECIALTIES;
-      if (hospitalId) {
-        list = list.filter((s) => s.hospitalId === hospitalId);
-      }
-      return list;
-    } catch {
-      return MOCK_SPECIALTIES;
+    if (hospitalId) {
+      const filtered = source.filter((s) => s.hospitalId === hospitalId);
+      if (filtered.length > 0) return filtered;
+      return source.map((s) => ({ ...s, hospitalId }));
     }
+    return source;
   }
 
   // Guardar especialidades actualizadas

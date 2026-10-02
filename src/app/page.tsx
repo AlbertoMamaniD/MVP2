@@ -1,17 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTickets } from "@/lib/hooks/useTickets";
 import { Specialty } from "@/types/specialty";
 import { MedicalTicket } from "@/types/ticket";
 import { HospitalSelector } from "@/components/fichas/HospitalSelector";
 import { LiveQuotaBanner } from "@/components/fichas/LiveQuotaBanner";
+import { DaySelector } from "@/components/fichas/DaySelector";
 import { SpecialtyList } from "@/components/fichas/SpecialtyList";
 import { BookingModal } from "@/components/fichas/BookingModal";
 import { DigitalPass } from "@/components/fichas/DigitalPass";
+import { getAvailableDays, AvailableDay } from "@/lib/utils/formatters";
 
 export default function HomePage() {
-  const [hospitalId, setHospitalId] = useState<string>("hosp-clinicas-lp");
+  const [mounted, setMounted] = useState(false);
+  const [hospitalId, setHospitalId] = useState<string>("hrsjdd-tarija");
+  const [days, setDays] = useState<AvailableDay[]>([]);
+  const [selectedDayId, setSelectedDayId] = useState<string>("");
   const [selectedSpecialty, setSelectedSpecialty] = useState<Specialty | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTicket, setActiveTicket] = useState<MedicalTicket | null>(null);
@@ -22,6 +27,16 @@ export default function HomePage() {
     bookTicket,
   } = useTickets(hospitalId);
 
+  useEffect(() => {
+    setMounted(true);
+    const availableDays = getAvailableDays();
+    setDays(availableDays);
+    if (availableDays.length > 0) {
+      setSelectedDayId(availableDays[0].id);
+    }
+  }, []);
+
+  const selectedDay = days.find((d) => d.id === selectedDayId) || days[0];
   const totalAvailable = specialties.reduce((acc, curr) => acc + curr.availableSlots, 0);
 
   const handleOpenBooking = (specialty: Specialty) => {
@@ -33,20 +48,41 @@ export default function HomePage() {
     setActiveTicket(ticket);
   };
 
+  if (!mounted) {
+    return (
+      <div className="container" style={{ padding: "48px 16px", textAlign: "center" }}>
+        <p style={{ color: "var(--text-muted)" }}>Cargando disponibilidad de cupos en tiempo real...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="container" style={{ paddingTop: "24px", paddingBottom: "48px" }}>
+    <div className="container" style={{ paddingTop: "20px", paddingBottom: "56px" }}>
       {/* Si el paciente acaba de sacar una ficha, mostramos su Pase Digital inmediatamente */}
       {activeTicket ? (
-        <div style={{ marginTop: "16px" }}>
+        <div style={{ marginTop: "12px" }}>
           <DigitalPass ticket={activeTicket} onClose={() => setActiveTicket(null)} />
         </div>
       ) : (
         <>
-          {/* Selector de Hospital */}
+          {/* Selector de Hospital de Referencia */}
           <HospitalSelector selectedId={hospitalId} onSelect={setHospitalId} />
 
-          {/* Banner Principal de Alerta y Semáforo de Cupos */}
-          <LiveQuotaBanner hospital={currentHospital} totalAvailable={totalAvailable} />
+          {/* Banner Principal de Certeza y Semáforo de Cupos */}
+          <LiveQuotaBanner
+            hospital={currentHospital}
+            totalAvailable={totalAvailable}
+            selectedDayLabel={selectedDay?.label || "Hoy"}
+          />
+
+          {/* Selector de Días Disponibles (Must Have del Documento) */}
+          {days.length > 0 && (
+            <DaySelector
+              days={days}
+              selectedDayId={selectedDayId}
+              onSelectDay={setSelectedDayId}
+            />
+          )}
 
           {/* Listado y Filtros de Especialidades */}
           <SpecialtyList
@@ -63,6 +99,8 @@ export default function HomePage() {
         onClose={() => setIsModalOpen(false)}
         onBook={bookTicket}
         onSuccess={handleBookingSuccess}
+        selectedDayLabel={selectedDay?.label}
+        selectedDayFormatted={selectedDay?.dateFormatted}
       />
     </div>
   );

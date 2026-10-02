@@ -12,9 +12,11 @@ interface BookingModalProps {
   onClose: () => void;
   onSuccess: (ticket: MedicalTicket) => void;
   onBook: (payload: BookingPayload) => { success: boolean; ticket?: MedicalTicket; error?: string };
+  selectedDayLabel?: string;
+  selectedDayFormatted?: string;
 }
 
-const DEPARTAMENTOS_BOLIVIA = ["LP", "SC", "CB", "OR", "PT", "CH", "TJ", "BE", "PA"];
+const DEPARTAMENTOS_BOLIVIA = ["TJ (Tarija)", "LP (La Paz)", "SC (Santa Cruz)", "CB (Cochabamba)", "OR (Oruro)", "PT (Potosí)", "CH (Chuquisaca)", "BE (Beni)", "PA (Pando)"];
 
 export const BookingModal: React.FC<BookingModalProps> = ({
   specialty,
@@ -22,9 +24,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   onClose,
   onSuccess,
   onBook,
+  selectedDayLabel = "Hoy",
+  selectedDayFormatted,
 }) => {
   const [ciNumber, setCiNumber] = useState("");
-  const [ciExtension, setCiExtension] = useState("LP");
+  const [ciExtension, setCiExtension] = useState("TJ (Tarija)");
   const [patientName, setPatientName] = useState("");
   const [phone, setPhone] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -36,10 +40,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     e.preventDefault();
     setErrorMsg(null);
 
-    const fullCI = `${ciNumber.trim()}-${ciExtension}`;
+    const extCode = ciExtension.split(" ")[0];
+    const fullCI = `${ciNumber.trim()}-${extCode}`;
 
     if (!ciNumber.trim() || ciNumber.trim().length < 5) {
-      setErrorMsg("Por favor ingresa un número de Carnet de Identidad válido.");
+      setErrorMsg("Por favor ingresa un número de Carnet de Identidad válido (mínimo 5 dígitos).");
       return;
     }
 
@@ -81,6 +86,12 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       <form onSubmit={handleSubmit} className={styles.form}>
         {/* Resumen del turno */}
         <div className={styles.summaryBox}>
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>Fecha de Consulta:</span>
+            <span className={styles.summaryValueHighlight}>
+              📅 {selectedDayLabel} {selectedDayFormatted ? `(${selectedDayFormatted})` : ""}
+            </span>
+          </div>
           <div className={styles.summaryItem}>
             <span className={styles.summaryLabel}>Médico:</span>
             <span className={styles.summaryValue}>{specialty.doctorName}</span>

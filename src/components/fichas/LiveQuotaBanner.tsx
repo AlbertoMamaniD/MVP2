@@ -5,34 +5,44 @@ import { Hospital } from "@/types/hospital";
 interface LiveQuotaBannerProps {
   hospital: Hospital;
   totalAvailable: number;
+  selectedDayLabel?: string;
 }
 
-export const LiveQuotaBanner: React.FC<LiveQuotaBannerProps> = ({ hospital, totalAvailable }) => {
+export const LiveQuotaBanner: React.FC<LiveQuotaBannerProps> = ({
+  hospital,
+  totalAvailable,
+  selectedDayLabel = "Hoy",
+}) => {
   return (
     <section className={styles.banner}>
       <div className={styles.headerRow}>
         <div className={styles.hospitalMeta}>
-          <span className={styles.hospitalBadge}>{hospital.level} · {hospital.city}</span>
+          <div className={styles.badgeRow}>
+            <span className={styles.hospitalBadge}>{hospital.level} · {hospital.city}</span>
+            <span className={styles.systemPill}>{hospital.system} GRATUITO</span>
+          </div>
           <h1 className={styles.hospitalName}>{hospital.name}</h1>
-          <p className={styles.hospitalAddress}>📍 {hospital.address} · Atención de {hospital.openingHours}</p>
+          <p className={styles.hospitalAddress}>
+            📍 {hospital.address} · Atención: <strong>{hospital.openingHours}</strong>
+          </p>
         </div>
 
         <div className={styles.quotaCounter}>
-          <span className={styles.counterLabel}>Cupos Libres Hoy</span>
+          <span className={styles.counterLabel}>Cupos Libres {selectedDayLabel}</span>
           <div className={styles.counterNumber}>
             <span className={styles.pulseDot} />
             <span>{totalAvailable}</span>
           </div>
-          <span className={styles.counterSub}>En tiempo real</span>
+          <span className={styles.counterSub}>En tiempo real · Cero filas</span>
         </div>
       </div>
 
       <div className={styles.alertNotice}>
-        <div className={styles.alertIcon}>💡</div>
+        <div className={styles.alertIcon}>🛡️</div>
         <div className={styles.alertContent}>
-          <strong>¡No madrugues a las 4:00 AM en el frío ni compres puestos!</strong>
+          <strong>¡Tu derecho a la salud sin filas de madrugada ni frío!</strong>
           <p>
-            Revisa abajo la especialidad que buscas. Si hay cupos disponibles, resérvala con tu Carnet de Identidad. Llegarás directamente a tu hora programada sin hacer fila en la calle.
+            Elige tu especialidad y reserva con tu Carnet de Identidad. El sistema te asignará una <strong>hora exacta sugerida de llegada</strong>. Solo debes presentarte 15 minutos antes directamente en consultorio.
           </p>
         </div>
       </div>

@@ -3,16 +3,17 @@
   border-bottom: 1px solid var(--border-light);
   position: sticky;
   top: 0;
-  z-index: 40;
-  box-shadow: var(--shadow-sm);
+  z-index: 50;
+  box-shadow: var(--shadow-xs);
+  backdrop-filter: blur(8px);
 }
 
 .headerContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: var(--space-sm);
-  padding-bottom: var(--space-sm);
+  padding-top: 10px;
+  padding-bottom: 10px;
   gap: var(--space-md);
 }
 
@@ -23,15 +24,15 @@
 }
 
 .logoIcon {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--primary-600), var(--primary-800));
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-800) 100%);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgb(13 148 136 / 0.3);
+  box-shadow: 0 4px 12px rgb(13 148 136 / 0.28);
 }
 
 .brandText {
@@ -39,28 +40,59 @@
   flex-direction: column;
 }
 
-.brandTitle {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--text-primary);
+.titleRow {
   display: flex;
   align-items: center;
-  gap: 6px;
-  letter-spacing: -0.02em;
+  gap: 8px;
 }
 
-.boliviaTag {
+.brandTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.boliviaBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #0f172a;
+  color: #ffffff;
   font-size: 0.65rem;
   font-weight: 800;
-  background-color: #ef4444;
-  color: #ffffff;
   padding: 2px 6px;
-  border-radius: var(--radius-sm);
-  letter-spacing: 0.05em;
+  border-radius: var(--radius-xs);
+  letter-spacing: 0.06em;
+}
+
+.flagStripes {
+  display: flex;
+  flex-direction: column;
+  width: 10px;
+  height: 9px;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.stripeRed {
+  flex: 1;
+  background-color: #ef4444;
+}
+
+.stripeYellow {
+  flex: 1;
+  background-color: #f59e0b;
+}
+
+.stripeGreen {
+  flex: 1;
+  background-color: #10b981;
 }
 
 .brandSubtitle {
-  font-size: 0.72rem;
+  font-size: 0.73rem;
   color: var(--text-muted);
   font-weight: 500;
 }
@@ -68,7 +100,7 @@
 .rightNav {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
+  gap: 10px;
 }
 
 .liveClock {
@@ -87,7 +119,7 @@
   background-color: var(--status-available-dot);
   border-radius: 50%;
   box-shadow: 0 0 6px var(--status-available-dot);
-  animation: pulseDot 2s infinite ease-in-out;
+  animation: pulseGlow 2s infinite ease-in-out;
 }
 
 .dateText {
@@ -97,41 +129,67 @@
   text-transform: capitalize;
 }
 
+.searchPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--primary-50);
+  border: 1px solid var(--primary-200);
+  color: var(--primary-800);
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.searchPill:hover {
+  background-color: var(--primary-100);
+  border-color: var(--primary-600);
+  color: var(--primary-900);
+}
+
 .navLinks {
   display: flex;
   gap: 6px;
 }
 
 .navLink {
-  padding: 8px 14px;
-  border-radius: var(--radius-md);
-  font-size: 0.85rem;
-  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 700;
   color: var(--text-secondary);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .navLink:hover {
-  background-color: var(--primary-50);
+  background-color: var(--bg-subtle);
   color: var(--primary-700);
 }
 
 .navLink.active {
-  background-color: var(--primary-600);
+  background-color: var(--primary-700);
   color: #ffffff;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .liveClock {
     display: none;
   }
+}
 
+@media (max-width: 540px) {
   .brandSubtitle {
     display: none;
   }
 
+  .searchPill span {
+    font-size: 0.75rem;
+  }
+
   .navLink {
-    padding: 6px 10px;
-    font-size: 0.8rem;
+    padding: 6px 8px;
+    font-size: 0.75rem;
   }
 }

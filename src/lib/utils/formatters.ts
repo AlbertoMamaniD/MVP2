@@ -2,6 +2,62 @@
  * Utilidades de formateo para fechas, horas y cédulas de identidad (Bolivia)
  */
 
+export interface AvailableDay {
+  id: string; // "YYYY-MM-DD"
+  label: string; // "Hoy", "Mañana", etc.
+  dayName: string; // "Viernes"
+  dateFormatted: string; // "Viernes, 02 de Octubre"
+  shortDate: string; // "02/10"
+  isToday: boolean;
+}
+
+export function getAvailableDays(): AvailableDay[] {
+  const days: AvailableDay[] = [];
+  const base = new Date();
+
+  for (let i = 0; i < 4; i++) {
+    const d = new Date(base);
+    d.setDate(base.getDate() + i);
+
+    // Si es domingo, saltar o marcar
+    const dayOfWeek = d.getDay();
+    if (dayOfWeek === 0) continue; // Los domingos no hay consulta regular en hospitales públicos
+
+    let label = "";
+    if (i === 0) label = "Hoy";
+    else if (i === 1) label = "Mañana";
+    else {
+      const dayNames = ["Dom", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+      label = dayNames[dayOfWeek];
+    }
+
+    const isoDate = d.toISOString().split("T")[0];
+    const dayName = d.toLocaleDateString("es-BO", { weekday: "long" });
+    const capitalizedDay = dayName.charAt(0).toUpperCase() + dayName.slice(1);
+    
+    const dateFormatted = d.toLocaleDateString("es-BO", {
+      weekday: "long",
+      day: "2-digit",
+      month: "short",
+    });
+
+    const shortDate = `${d.getDate().toString().padStart(2, "0")}/${(d.getMonth() + 1).toString().padStart(2, "0")}`;
+
+    days.push({
+      id: isoDate,
+      label,
+      dayName: capitalizedDay,
+      dateFormatted,
+      shortDate,
+      isToday: i === 0,
+    });
+
+    if (days.length >= 3) break;
+  }
+
+  return days;
+}
+
 export function formatCurrentDate(): string {
   const now = new Date();
   return now.toLocaleDateString("es-BO", {

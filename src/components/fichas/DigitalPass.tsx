@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { MedicalTicket } from "@/types/ticket";
 import { Badge } from "@/components/common/Badge";
 import { getWhatsAppShareUrl } from "@/lib/utils/whatsapp";
@@ -12,7 +12,14 @@ interface DigitalPassProps {
 }
 
 export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => {
+  const [copied, setCopied] = useState(false);
   const whatsappUrl = getWhatsAppShareUrl(ticket);
+
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(ticket.tokenCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 3000);
+  };
 
   const handlePrint = () => {
     window.print();
@@ -26,17 +33,17 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
         <div className={styles.heroText}>
           <h2>¡Tu Ficha Médica está Asegurada!</h2>
           <p>
-            No tienes que madrugar ni exponerte al frío de las 4:00 AM. Tu cupo está asignado a tu nombre y carnet.
+            No tienes que madrugar ni exponerte al frío de las 4:00 AM. Tu cupo está registrado a tu nombre y carnet de identidad.
           </p>
         </div>
       </div>
 
-      {/* Tarjeta del Ticket (Diseño estilo tarjeta de embarque / pasaporte) */}
+      {/* Tarjeta del Ticket (Diseño estilo tarjeta de embarque / pasaporte médico) */}
       <div className={styles.ticketCard} id="printable-ticket">
         {/* Cabecera del Ticket */}
         <div className={styles.ticketHeader}>
-          <div>
-            <span className={styles.systemTag}>SUS · SALUD PÚBLICA BOLIVIA</span>
+          <div className={styles.headerTitles}>
+            <span className={styles.systemTag}>SISTEMA ÚNICO DE SALUD (SUS) · BOLIVIA</span>
             <h3 className={styles.hospitalTitle}>{ticket.hospitalName}</h3>
           </div>
           <Badge variant={ticket.status === "checked_in" ? "info" : "success"}>
@@ -49,7 +56,7 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
           <div className={styles.timeBlock}>
             <span className={styles.timeBlockLabel}>⏰ HORA SUGERIDA DE LLEGADA</span>
             <span className={styles.timeBlockValue}>{ticket.estimatedArrival}</span>
-            <span className={styles.timeBlockHint}>Llega 15 min antes con tu carnet</span>
+            <span className={styles.timeBlockHint}>Llega 15 min antes con tu Cédula de Identidad</span>
           </div>
 
           <div className={styles.slotBlock}>
@@ -91,18 +98,29 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
         {/* Datos del Paciente y Código de Seguridad */}
         <div className={styles.patientFooter}>
           <div className={styles.patientInfo}>
-            <span className={styles.detailLabel}>PACIENTE REGISTRADO:</span>
+            <span className={styles.patientTag}>PACIENTE TITULAR</span>
             <span className={styles.patientName}>{ticket.patientName}</span>
-            <span className={styles.patientCI}>Cédula de Identidad: <strong>{ticket.ci}</strong></span>
-            <span className={styles.tokenCode}>Código de Ficha: <code>{ticket.tokenCode}</code></span>
+            <span className={styles.patientCI}>
+              Cédula de Identidad: <strong>{ticket.ci}</strong>
+            </span>
+            <div className={styles.tokenRow}>
+              <span className={styles.tokenLabel}>Código:</span>
+              <code className={styles.tokenCode}>{ticket.tokenCode}</code>
+              <button
+                type="button"
+                className={styles.copyBtn}
+                onClick={handleCopyCode}
+                title="Copiar código de ficha"
+              >
+                {copied ? "✓ Copiado" : "📋 Copiar"}
+              </button>
+            </div>
           </div>
 
           <div className={styles.qrArea}>
-            {/* Código QR SVG vectorial nítido */}
             <div className={styles.qrBox}>
               <svg width="84" height="84" viewBox="0 0 100 100" fill="none">
                 <rect width="100" height="100" fill="#ffffff" rx="8" />
-                {/* Esquinas QR */}
                 <rect x="10" y="10" width="25" height="25" stroke="#0f172a" strokeWidth="5" fill="none" />
                 <rect x="17" y="17" width="11" height="11" fill="#0f172a" />
                 
@@ -112,7 +130,6 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
                 <rect x="10" y="65" width="25" height="25" stroke="#0f172a" strokeWidth="5" fill="none" />
                 <rect x="17" y="72" width="11" height="11" fill="#0f172a" />
                 
-                {/* Patrones de datos */}
                 <rect x="42" y="15" width="6" height="15" fill="#0f172a" />
                 <rect x="42" y="38" width="16" height="6" fill="#0f172a" />
                 <rect x="15" y="42" width="15" height="6" fill="#0f172a" />
@@ -125,9 +142,14 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
             <span className={styles.qrHint}>Escanear en ventanilla</span>
           </div>
         </div>
+
+        {/* Nota legal / Dignidad */}
+        <div className={styles.ticketLegalNotice}>
+          ⚠️ Ficha intransferible. Presenta tu Carnet físico en el consultorio. La atención es gratuita y respaldada por el SUS.
+        </div>
       </div>
 
-      {/* Botones de acción */}
+      {/* Botones de acción primarios */}
       <div className={styles.actionButtons}>
         <a
           href={whatsappUrl}
@@ -139,12 +161,12 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
         </a>
 
         <button className={styles.printButton} onClick={handlePrint}>
-          <span>🖨️ Imprimir o Guardar en PDF</span>
+          <span>🖨️ Imprimir o Guardar como PDF</span>
         </button>
 
         {onClose && (
           <button className={styles.backButton} onClick={onClose}>
-            ← Volver al Semáforo
+            ← Volver al Semáforo de Especialidades
           </button>
         )}
       </div>

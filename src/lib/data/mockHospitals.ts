@@ -2,6 +2,28 @@ import { Hospital } from "@/types/hospital";
 
 export const MOCK_HOSPITALS: Hospital[] = [
   {
+    id: "hrsjdd-tarija",
+    name: "Hospital Regional San Juan de Dios (HRSJDD)",
+    city: "Tarija",
+    address: "C. Santa Cruz esq. Potosí, Barrio Las Panosas",
+    system: "SUS",
+    level: "3er Nivel (Especialidades)",
+    phone: "+591 4 6642000",
+    openingHours: "07:00 - 18:00",
+    isActive: true,
+  },
+  {
+    id: "cns-tarija",
+    name: "Hospital Obrero N° 7 · CNS Tarija",
+    city: "Tarija",
+    address: "Av. La Paz esq. Belgrano",
+    system: "CNS",
+    level: "2do Nivel",
+    phone: "+591 4 6643222",
+    openingHours: "07:30 - 17:00",
+    isActive: true,
+  },
+  {
     id: "hosp-clinicas-lp",
     name: "Hospital de Clínicas de La Paz",
     city: "La Paz",
@@ -32,17 +54,6 @@ export const MOCK_HOSPITALS: Hospital[] = [
     level: "3er Nivel (Especialidades)",
     phone: "+591 4 4252000",
     openingHours: "07:00 - 18:00",
-    isActive: true,
-  },
-  {
-    id: "hosp-norte-elalto",
-    name: "Hospital del Norte",
-    city: "El Alto",
-    address: "Av. Juan Pablo II, Zona Río Seco",
-    system: "SUS",
-    level: "3er Nivel (Especialidades)",
-    phone: "+591 2 2841000",
-    openingHours: "07:30 - 17:00",
     isActive: true,
   },
 ];
