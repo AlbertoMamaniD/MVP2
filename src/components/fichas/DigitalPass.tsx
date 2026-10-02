@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { MedicalTicket } from "@/types/ticket";
 import { Badge } from "@/components/common/Badge";
+import { AudioPlayerButton } from "@/components/common/AudioPlayerButton";
 import { getWhatsAppShareUrl } from "@/lib/utils/whatsapp";
 import styles from "./DigitalPass.module.css";
 
@@ -14,6 +16,8 @@ interface DigitalPassProps {
 export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => {
   const [copied, setCopied] = useState(false);
   const whatsappUrl = getWhatsAppShareUrl(ticket);
+
+  const passSpeechText = `Ficha médica confirmada para ${ticket.patientName}, carnet de identidad ${ticket.ci}. Su turno es el número ${ticket.slotNumber} para la especialidad de ${ticket.specialtyName} con el médico ${ticket.doctorName} en el ${ticket.roomNumber}. Su hora sugerida de llegada es a las ${ticket.estimatedArrival}. No madrugue a las 4 de la mañana en el frío. Preséntese quince minutos antes con su cédula de identidad original.`;
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(ticket.tokenCode);
@@ -27,7 +31,7 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
 
   return (
     <div className={styles.wrapper}>
-      {/* Mensaje de certeza / Anti-madrugada */}
+      {/* Mensaje de certeza / Anti-madrugada con Audio para Adultos Mayores */}
       <div className={styles.heroAlert}>
         <span className={styles.heroIcon}>🎉</span>
         <div className={styles.heroText}>
@@ -35,6 +39,13 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
           <p>
             No tienes que madrugar ni exponerte al frío de las 4:00 AM. Tu cupo está registrado a tu nombre y carnet de identidad.
           </p>
+          <div style={{ marginTop: "10px" }}>
+            <AudioPlayerButton
+              variant="banner"
+              label="🔊 Escuchar Datos de Mi Ficha en Voz Alta"
+              messageToRead={passSpeechText}
+            />
+          </div>
         </div>
       </div>
 
@@ -159,6 +170,10 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
         >
           <span>💬 Enviar o Guardar en WhatsApp</span>
         </a>
+
+        <Link href="/personal" className={styles.staffViewButton}>
+          <span>👨‍⚕️ Ver Cómo lo Recibe el Médico en Ventanilla →</span>
+        </Link>
 
         <button className={styles.printButton} onClick={handlePrint}>
           <span>🖨️ Imprimir o Guardar como PDF</span>

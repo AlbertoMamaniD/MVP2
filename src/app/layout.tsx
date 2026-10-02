@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { Header } from "@/components/common/Header";
 import { Footer } from "@/components/common/Footer";
+import { SprintBadge } from "@/components/common/SprintBadge";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -59,6 +60,7 @@ export default function RootLayout({
         <Header />
         <main style={{ flex: 1 }}>{children}</main>
         <Footer />
+        <SprintBadge />
       </body>
     </html>
   );

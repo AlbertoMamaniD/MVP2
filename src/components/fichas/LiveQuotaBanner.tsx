@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./LiveQuotaBanner.module.css";
 import { Hospital } from "@/types/hospital";
+import { AudioPlayerButton } from "@/components/common/AudioPlayerButton";
 
 interface LiveQuotaBannerProps {
   hospital: Hospital;
@@ -13,6 +14,8 @@ export const LiveQuotaBanner: React.FC<LiveQuotaBannerProps> = ({
   totalAvailable,
   selectedDayLabel = "Hoy",
 }) => {
+  const audioExplanation = `Estimado paciente del ${hospital.name}: en Tarija y Bolivia no madrugue a las cuatro de la mañana en el frío. Con FichaYa, consulte los cupos libres en tiempo real, elija su especialidad y reserve con su carnet de identidad. Llegue quince minutos antes de su turno asignado directamente al consultorio.`;
+
   return (
     <section className={styles.banner}>
       <div className={styles.headerRow}>
@@ -40,7 +43,14 @@ export const LiveQuotaBanner: React.FC<LiveQuotaBannerProps> = ({
       <div className={styles.alertNotice}>
         <div className={styles.alertIcon}>🛡️</div>
         <div className={styles.alertContent}>
-          <strong>¡Tu derecho a la salud sin filas de madrugada ni frío!</strong>
+          <div className={styles.alertTitleRow}>
+            <strong>¡Tu derecho a la salud sin filas de madrugada ni frío!</strong>
+            <AudioPlayerButton
+              variant="banner"
+              label="🔊 Escuchar en Voz Alta"
+              messageToRead={audioExplanation}
+            />
+          </div>
           <p>
             Elige tu especialidad y reserva con tu Carnet de Identidad. El sistema te asignará una <strong>hora exacta sugerida de llegada</strong>. Solo debes presentarte 15 minutos antes directamente en consultorio.
           </p>

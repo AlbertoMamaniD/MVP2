@@ -106,6 +106,23 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           </div>
         </div>
 
+        {/* Botón Demo Express para Test Rápido */}
+        <div className={styles.demoFillRow}>
+          <button
+            type="button"
+            className={styles.demoFillBtn}
+            onClick={() => {
+              setCiNumber("7123456");
+              setCiExtension("TJ (Tarija)");
+              setPatientName("Roberto Cardozo Vaca");
+              setPhone("71829304");
+              setErrorMsg(null);
+            }}
+          >
+            ⚡ Llenar Datos de Prueba (Demo Tarija)
+          </button>
+        </div>
+
         {errorMsg && (
           <div className={styles.errorAlert}>
             <span>⚠️ {errorMsg}</span>
