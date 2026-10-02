@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Modal } from "./Modal";
+import { TargetIcon, TicketIcon, AlertTriangleIcon, ClockIcon } from "@/components/common/Icons";
 import styles from "./SprintBadge.module.css";
 
 export const SprintBadge: React.FC = () => {
@@ -16,12 +17,12 @@ export const SprintBadge: React.FC = () => {
           onClick={() => setIsOpen(true)}
           title="Ver Ficha Técnica del Experimento AI MVP Sprint"
         >
-          <span className={styles.icon}>🎯</span>
+          <span className={styles.icon}><TargetIcon size={16} /></span>
           <span className={styles.text}>Ficha del Sprint (150 min)</span>
         </button>
       </div>
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="📋 Ficha Técnica del Experimento MVP">
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Ficha Técnica del Experimento MVP">
         <div className={styles.content}>
           <div className={styles.section}>
             <span className={styles.sectionTag}>CASO DE ESTUDIO</span>
@@ -32,14 +33,18 @@ export const SprintBadge: React.FC = () => {
 
           <div className={styles.grid}>
             <div className={styles.card}>
-              <span className={styles.cardTitle}>⚠️ Riskiest Assumption</span>
+              <span className={styles.cardTitle}>
+                <AlertTriangleIcon size={14} color="#b45309" /> Riskiest Assumption
+              </span>
               <p className={styles.cardBody}>
                 Que las personas confíen en una ficha digital en su celular y estén dispuestas a <strong>dejar de madrugar a las 4:00 AM</strong> para hacer fila física.
               </p>
             </div>
 
             <div className={styles.card}>
-              <span className={styles.cardTitle}>⏱️ Success Metric</span>
+              <span className={styles.cardTitle}>
+                <ClockIcon size={14} color="#0f766e" /> Success Metric
+              </span>
               <p className={styles.cardBody}>
                 Un usuario nuevo completa la reserva de principio a fin en <strong>menos de 2 minutos</strong> y sin requerir asistencia.
               </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useTickets } from "@/lib/hooks/useTickets";
 import { Specialty } from "@/types/specialty";
 import { MedicalTicket } from "@/types/ticket";
@@ -12,11 +12,12 @@ import { BookingModal } from "@/components/fichas/BookingModal";
 import { DigitalPass } from "@/components/fichas/DigitalPass";
 import { getAvailableDays, AvailableDay } from "@/lib/utils/formatters";
 
+const INITIAL_DAYS: AvailableDay[] = getAvailableDays();
+
 export default function HomePage() {
-  const [mounted, setMounted] = useState(false);
   const [hospitalId, setHospitalId] = useState<string>("hrsjdd-tarija");
-  const [days, setDays] = useState<AvailableDay[]>([]);
-  const [selectedDayId, setSelectedDayId] = useState<string>("");
+  const [days] = useState<AvailableDay[]>(INITIAL_DAYS);
+  const [selectedDayId, setSelectedDayId] = useState<string>(INITIAL_DAYS[0]?.id || "");
   const [selectedSpecialty, setSelectedSpecialty] = useState<Specialty | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTicket, setActiveTicket] = useState<MedicalTicket | null>(null);
@@ -26,15 +27,6 @@ export default function HomePage() {
     currentHospital,
     bookTicket,
   } = useTickets(hospitalId);
-
-  useEffect(() => {
-    setMounted(true);
-    const availableDays = getAvailableDays();
-    setDays(availableDays);
-    if (availableDays.length > 0) {
-      setSelectedDayId(availableDays[0].id);
-    }
-  }, []);
 
   const selectedDay = days.find((d) => d.id === selectedDayId) || days[0];
   const totalAvailable = specialties.reduce((acc, curr) => acc + curr.availableSlots, 0);
@@ -48,16 +40,12 @@ export default function HomePage() {
     setActiveTicket(ticket);
   };
 
-  if (!mounted) {
-    return (
-      <div className="container" style={{ padding: "48px 16px", textAlign: "center" }}>
-        <p style={{ color: "var(--text-muted)" }}>Cargando disponibilidad de cupos en tiempo real...</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="container" style={{ paddingTop: "20px", paddingBottom: "56px" }}>
+    <div
+      className="container"
+      style={{ paddingTop: "20px", paddingBottom: "56px" }}
+      suppressHydrationWarning
+    >
       {/* Si el paciente acaba de sacar una ficha, mostramos su Pase Digital inmediatamente */}
       {activeTicket ? (
         <div style={{ marginTop: "12px" }}>

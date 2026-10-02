@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { Specialty, QuotaStatus } from "@/types/specialty";
 import { SpecialtyCard } from "./SpecialtyCard";
+import { SearchIcon, CloseIcon } from "@/components/common/Icons";
 import styles from "./SpecialtyList.module.css";
 
 interface SpecialtyListProps {
@@ -43,17 +44,19 @@ export const SpecialtyList: React.FC<SpecialtyListProps> = ({ specialties, onBoo
       {/* Controles de Búsqueda y Filtros */}
       <div className={styles.controls}>
         <div className={styles.searchBox}>
-          <span className={styles.searchIcon}>🔍</span>
+          <span className={styles.searchIcon}>
+            <SearchIcon size={18} />
+          </span>
           <input
             type="text"
             className={styles.searchInput}
-            placeholder="Buscar especialidad o médico (ej. Cardiología, Pediatría)..."
+            placeholder="Buscar especialidad o médico (ej. Traumatología, Cardiología, Pediatría)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           {searchTerm && (
-            <button className={styles.clearSearch} onClick={() => setSearchTerm("")}>
-              ✕
+            <button className={styles.clearSearch} onClick={() => setSearchTerm("")} aria-label="Limpiar búsqueda">
+              <CloseIcon size={14} />
             </button>
           )}
         </div>
@@ -69,19 +72,19 @@ export const SpecialtyList: React.FC<SpecialtyListProps> = ({ specialties, onBoo
             className={`${styles.filterTab} ${styles.availableTab} ${activeFilter === "available" ? styles.activeTab : ""}`}
             onClick={() => setActiveFilter("available")}
           >
-            🟢 Disponibles ({counts.available})
+            <span className={styles.statusDotAvailable} /> Disponibles ({counts.available})
           </button>
           <button
             className={`${styles.filterTab} ${styles.fewTab} ${activeFilter === "few" ? styles.activeTab : ""}`}
             onClick={() => setActiveFilter("few")}
           >
-            🟡 Últimos Cupos ({counts.few})
+            <span className={styles.statusDotFew} /> Últimos Cupos ({counts.few})
           </button>
           <button
             className={`${styles.filterTab} ${styles.exhaustedTab} ${activeFilter === "exhausted" ? styles.activeTab : ""}`}
             onClick={() => setActiveFilter("exhausted")}
           >
-            🔴 Agotados ({counts.exhausted})
+            <span className={styles.statusDotExhausted} /> Agotados ({counts.exhausted})
           </button>
         </div>
       </div>
@@ -95,7 +98,9 @@ export const SpecialtyList: React.FC<SpecialtyListProps> = ({ specialties, onBoo
         </div>
       ) : (
         <div className={styles.emptyState}>
-          <span className={styles.emptyIcon}>🔍</span>
+          <span className={styles.emptyIcon}>
+            <SearchIcon size={36} color="var(--text-muted)" />
+          </span>
           <h4>No se encontraron especialidades</h4>
           <p>Intenta con otro término de búsqueda o cambia el filtro de disponibilidad.</p>
         </div>

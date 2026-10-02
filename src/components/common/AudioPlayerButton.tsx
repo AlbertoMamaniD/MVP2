@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { speakMessage, stopSpeaking } from "@/lib/utils/audioSpeech";
+import { VolumeIcon, VolumeStopIcon } from "@/components/common/Icons";
 import styles from "./AudioPlayerButton.module.css";
 
 interface AudioPlayerButtonProps {
@@ -51,7 +52,9 @@ export const AudioPlayerButton: React.FC<AudioPlayerButtonProps> = ({
       title={isPlaying ? "Detener audio" : "Escuchar mensaje leído en voz alta"}
       aria-label={label}
     >
-      <span className={styles.icon}>{isPlaying ? "⏹️" : "🔊"}</span>
+      <span className={styles.icon}>
+        {isPlaying ? <VolumeStopIcon size={16} /> : <VolumeIcon size={16} />}
+      </span>
       <span className={styles.label}>{isPlaying ? "Pausar Audio" : label}</span>
       {isPlaying && (
         <span className={styles.wave}>

@@ -55,10 +55,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${plusJakarta.variable} ${inter.variable}`}>
-      <body className="main-layout">
+    <html
+      lang="es"
+      className={`${plusJakarta.variable} ${inter.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="main-layout" suppressHydrationWarning>
         <Header />
-        <main style={{ flex: 1 }}>{children}</main>
+        <main style={{ flex: 1 }} suppressHydrationWarning>
+          {children}
+        </main>
         <Footer />
         <SprintBadge />
       </body>

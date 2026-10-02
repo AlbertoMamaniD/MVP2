@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./LiveQuotaBanner.module.css";
 import { Hospital } from "@/types/hospital";
 import { AudioPlayerButton } from "@/components/common/AudioPlayerButton";
+import { LocationIcon, ShieldCheckIcon } from "@/components/common/Icons";
 
 interface LiveQuotaBannerProps {
   hospital: Hospital;
@@ -26,7 +27,7 @@ export const LiveQuotaBanner: React.FC<LiveQuotaBannerProps> = ({
           </div>
           <h1 className={styles.hospitalName}>{hospital.name}</h1>
           <p className={styles.hospitalAddress}>
-            📍 {hospital.address} · Atención: <strong>{hospital.openingHours}</strong>
+            <LocationIcon size={14} /> {hospital.address} · Atención: <strong>{hospital.openingHours}</strong>
           </p>
         </div>
 
@@ -41,13 +42,15 @@ export const LiveQuotaBanner: React.FC<LiveQuotaBannerProps> = ({
       </div>
 
       <div className={styles.alertNotice}>
-        <div className={styles.alertIcon}>🛡️</div>
+        <div className={styles.alertIcon}>
+          <ShieldCheckIcon size={24} color="#fef08a" />
+        </div>
         <div className={styles.alertContent}>
           <div className={styles.alertTitleRow}>
             <strong>¡Tu derecho a la salud sin filas de madrugada ni frío!</strong>
             <AudioPlayerButton
               variant="banner"
-              label="🔊 Escuchar en Voz Alta"
+              label="Escuchar en Voz Alta"
               messageToRead={audioExplanation}
             />
           </div>

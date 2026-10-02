@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import styles from "./Modal.module.css";
+import { CloseIcon } from "@/components/common/Icons";
 
 interface ModalProps {
   isOpen: boolean;
@@ -33,7 +34,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }
         <div className={styles.modalHeader}>
           <h2 className={styles.modalTitle}>{title}</h2>
           <button className={styles.closeButton} onClick={onClose} aria-label="Cerrar modal">
-            ✕
+            <CloseIcon size={18} />
           </button>
         </div>
         <div className={styles.modalBody}>{children}</div>

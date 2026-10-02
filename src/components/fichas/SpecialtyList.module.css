@@ -85,6 +85,26 @@
   border-color: var(--primary-600) !important;
 }
 
+.statusDotAvailable, .statusDotFew, .statusDotExhausted {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.statusDotAvailable {
+  background-color: var(--status-available-dot);
+}
+
+.statusDotFew {
+  background-color: var(--status-few-dot);
+}
+
+.statusDotExhausted {
+  background-color: var(--status-exhausted-dot);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

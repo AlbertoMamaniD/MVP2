@@ -1,6 +1,7 @@
 import React from "react";
 import { Hospital } from "@/types/hospital";
 import { MOCK_HOSPITALS } from "@/lib/data/mockHospitals";
+import { HospitalIcon } from "@/components/common/Icons";
 import styles from "./HospitalSelector.module.css";
 
 interface HospitalSelectorProps {
@@ -12,7 +13,7 @@ export const HospitalSelector: React.FC<HospitalSelectorProps> = ({ selectedId, 
   return (
     <div className={styles.selectorWrapper}>
       <label htmlFor="hospital-select" className={styles.label}>
-        🏥 Centro de Salud / Hospital:
+        <HospitalIcon size={16} /> Centro de Salud / Hospital de Referencia:
       </label>
       <div className={styles.selectContainer}>
         <select
