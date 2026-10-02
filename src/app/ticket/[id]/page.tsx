@@ -42,10 +42,10 @@ export default function TicketDetailPage() {
           style={{
             display: "inline-block",
             marginTop: "20px",
-            padding: "10px 20px",
-            backgroundColor: "var(--primary-600)",
+            padding: "12px 22px",
+            backgroundColor: "var(--primary-700)",
             color: "#ffffff",
-            borderRadius: "8px",
+            borderRadius: "var(--radius-md)",
             fontWeight: 700,
           }}
         >

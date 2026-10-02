@@ -5,9 +5,9 @@
 }
 
 .intro {
-  font-size: 0.88rem;
+  font-size: var(--text-base);
   color: var(--text-secondary);
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .form {
@@ -22,35 +22,40 @@
 
 .input {
   flex: 1;
+  min-width: 0;
   padding: 12px 14px;
-  border: 2px solid var(--border-medium);
+  border: 1.5px solid var(--border-medium);
   border-radius: var(--radius-md);
-  font-size: 1rem;
+  font-size: var(--text-md);
   font-weight: 600;
   color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
 }
 
 .input:focus {
   border-color: var(--primary-600);
   outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 .searchButton {
-  padding: 12px 20px;
-  background-color: var(--primary-600);
+  padding: 12px 22px;
+  background-color: var(--primary-700);
   color: #ffffff;
   border-radius: var(--radius-md);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: var(--text-base);
+  box-shadow: inset 0 -2px 0 rgb(0 0 0 / 0.15);
 }
 
 .searchButton:hover {
-  background-color: var(--primary-700);
+  background-color: var(--primary-800);
 }
 
 .resultsArea {
-  margin-top: var(--space-sm);
-  animation: fadeIn 0.2s ease-out;
+  margin-top: var(--space-xs);
+  animation: fadeIn 0.2s var(--ease-out);
 }
 
 .resultsList {
@@ -60,53 +65,63 @@
 }
 
 .resultsCount {
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: var(--text-sm);
+  font-weight: 600;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 .ticketResultCard {
-  background-color: var(--primary-50);
-  border: 1px solid var(--primary-200);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--primary-600);
   border-radius: var(--radius-md);
-  padding: 14px;
+  padding: 14px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+  box-shadow: var(--shadow-xs);
 }
 
 .ticketResultMeta {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 
 .specName {
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--primary-900);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .hospitalName {
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   color: var(--text-secondary);
 }
 
 .timeHighlight {
-  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: var(--text-sm);
   color: var(--primary-800);
   margin-top: 4px;
+  font-variant-numeric: tabular-nums;
 }
 
 .viewButton {
-  padding: 8px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
   background-color: var(--primary-700);
   color: #ffffff;
   border-radius: var(--radius-sm);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 700;
   white-space: nowrap;
 }
@@ -117,16 +132,26 @@
 
 .notFound {
   background-color: var(--bg-subtle);
-  border: 1px dashed var(--border-medium);
   border-radius: var(--radius-md);
-  padding: var(--space-md);
+  padding: 20px var(--space-md);
   text-align: center;
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
 }
 
 .notFoundIcon {
-  font-size: 1.5rem;
-  display: block;
+  display: inline-flex;
   margin-bottom: 6px;
+}
+
+@media (max-width: 480px) {
+  .ticketResultCard {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .viewButton {
+    justify-content: center;
+  }
 }

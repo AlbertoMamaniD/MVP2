@@ -68,11 +68,11 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
         {/* Cabecera del Ticket */}
         <div className={styles.ticketHeader}>
           <div className={styles.headerTitles}>
-            <span className={styles.systemTag}>SISTEMA ÚNICO DE SALUD (SUS) · BOLIVIA</span>
+            <span className={styles.systemTag}>Sistema Único de Salud (SUS), Bolivia</span>
             <h3 className={styles.hospitalTitle}>{ticket.hospitalName}</h3>
           </div>
           <Badge variant={ticket.status === "checked_in" ? "info" : "success"}>
-            {ticket.status === "checked_in" ? "EN SALA DE ESPERA" : "FICHA CONFIRMADA"}
+            {ticket.status === "checked_in" ? "En sala de espera" : "Ficha confirmada"}
           </Badge>
         </div>
 
@@ -80,14 +80,14 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
         <div className={styles.scheduleHighlight}>
           <div className={styles.timeBlock}>
             <span className={styles.timeBlockLabel}>
-              <ClockIcon size={13} /> HORA SUGERIDA DE LLEGADA
+              <ClockIcon size={13} /> Hora sugerida de llegada
             </span>
             <span className={styles.timeBlockValue}>{ticket.estimatedArrival}</span>
             <span className={styles.timeBlockHint}>Llega 15 min antes con tu Cédula de Identidad</span>
           </div>
 
           <div className={styles.slotBlock}>
-            <span className={styles.slotBlockLabel}>TURNO N°</span>
+            <span className={styles.slotBlockLabel}>Turno</span>
             <span className={styles.slotBlockNumber}>#{ticket.slotNumber.toString().padStart(2, "0")}</span>
           </div>
         </div>
@@ -95,28 +95,28 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
         {/* Detalles Médicos */}
         <div className={styles.detailsGrid}>
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Especialidad:</span>
+            <span className={styles.detailLabel}>Especialidad</span>
             <span className={styles.detailValueBold}>{ticket.specialtyName}</span>
           </div>
 
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Médico Asignado:</span>
+            <span className={styles.detailLabel}>Médico asignado</span>
             <span className={styles.detailValue}>{ticket.doctorName}</span>
           </div>
 
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Lugar / Consultorio:</span>
+            <span className={styles.detailLabel}>Consultorio</span>
             <span className={styles.detailValue}>{ticket.roomNumber}</span>
           </div>
 
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Hora Estimada Consulta:</span>
+            <span className={styles.detailLabel}>Hora estimada de consulta</span>
             <span className={styles.detailValue}>{ticket.estimatedConsultation}</span>
           </div>
         </div>
 
         {/* Línea perforada decorativa */}
-        <div className={styles.perforatedLine}>
+        <div className={styles.perforatedLine} aria-hidden="true">
           <span className={styles.notchLeft} />
           <span className={styles.dashedLine} />
           <span className={styles.notchRight} />
@@ -125,13 +125,13 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
         {/* Datos del Paciente y Código de Seguridad */}
         <div className={styles.patientFooter}>
           <div className={styles.patientInfo}>
-            <span className={styles.patientTag}>PACIENTE TITULAR</span>
+            <span className={styles.patientTag}>Paciente titular</span>
             <span className={styles.patientName}>{ticket.patientName}</span>
             <span className={styles.patientCI}>
               Cédula de Identidad: <strong>{ticket.ci}</strong>
             </span>
             <div className={styles.tokenRow}>
-              <span className={styles.tokenLabel}>Código:</span>
+              <span className={styles.tokenLabel}>Código</span>
               <code className={styles.tokenCode}>{ticket.tokenCode}</code>
               <button
                 type="button"
@@ -147,7 +147,7 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
 
           <div className={styles.qrArea}>
             <div className={styles.qrBox}>
-              <svg width="84" height="84" viewBox="0 0 100 100" fill="none">
+              <svg width="84" height="84" viewBox="0 0 100 100" fill="none" role="img" aria-label="Código QR de la ficha">
                 <rect width="100" height="100" fill="#ffffff" rx="8" />
                 <rect x="10" y="10" width="25" height="25" stroke="#0f172a" strokeWidth="5" fill="none" />
                 <rect x="17" y="17" width="11" height="11" fill="#0f172a" />

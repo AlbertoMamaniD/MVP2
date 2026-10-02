@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
       <div className={`container ${styles.footerContainer}`}>
         <div className={styles.infoSection}>
           <div className={styles.badgeRow}>
-            <span className={styles.tag}>SUS · Sistema Único de Salud</span>
+            <span className={styles.tag}>Sistema Único de Salud (SUS)</span>
             <span className={styles.tag}>Bolivia</span>
           </div>
           <p className={styles.description}>
@@ -32,7 +32,10 @@ export const Footer: React.FC = () => {
         </div>
       </div>
       <div className={styles.subFooter}>
-        <p>© {new Date().getFullYear()} FichaYa · Transparencia y Dignidad en la Salud Pública</p>
+        <p>
+          <span>© {new Date().getFullYear()} FichaYa</span>
+          <span>Transparencia y dignidad en la salud pública</span>
+        </p>
       </div>
     </footer>
   );

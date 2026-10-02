@@ -88,7 +88,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={`Sacar Ficha · ${specialty.name}`}>
+    <Modal isOpen={isOpen} onClose={onClose} title={`Sacar Ficha de ${specialty.name}`}>
       <form onSubmit={handleSubmit} className={styles.form}>
         {/* Resumen del turno */}
         <div className={styles.summaryBox}>
@@ -131,7 +131,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         </div>
 
         {errorMsg && (
-          <div className={styles.errorAlert}>
+          <div className={styles.errorAlert} role="alert">
             <AlertTriangleIcon size={16} />
             <span>{errorMsg}</span>
           </div>
@@ -139,12 +139,15 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
         {/* Input Cédula de Identidad */}
         <div className={styles.inputGroup}>
-          <label className={styles.label}>
-            Cédula de Identidad (CI) del Paciente: <span className={styles.required}>*</span>
+          <label htmlFor="booking-ci" className={styles.label}>
+            Cédula de Identidad (CI) del Paciente <span className={styles.required} aria-hidden="true">*</span>
           </label>
           <div className={styles.ciRow}>
             <input
+              id="booking-ci"
               type="text"
+              inputMode="numeric"
+              autoComplete="off"
               className={styles.input}
               placeholder="Ej. 6849201"
               value={ciNumber}
@@ -153,6 +156,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               autoFocus
             />
             <select
+              aria-label="Departamento de expedición del carnet"
               className={styles.extensionSelect}
               value={ciExtension}
               onChange={(e) => setCiExtension(e.target.value)}
@@ -171,11 +175,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
         {/* Input Nombre Paciente */}
         <div className={styles.inputGroup}>
-          <label className={styles.label}>
-            Nombre y Apellido Completo: <span className={styles.required}>*</span>
+          <label htmlFor="booking-name" className={styles.label}>
+            Nombre y Apellido Completo <span className={styles.required} aria-hidden="true">*</span>
           </label>
           <input
+            id="booking-name"
             type="text"
+            autoComplete="name"
             className={styles.input}
             placeholder="Ej. Maria Elena Quispe Mamani"
             value={patientName}
@@ -186,13 +192,16 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
         {/* Input WhatsApp / Celular */}
         <div className={styles.inputGroup}>
-          <label className={styles.label}>
-            Número de WhatsApp (para recibir el pase): <span className={styles.required}>*</span>
+          <label htmlFor="booking-phone" className={styles.label}>
+            Número de WhatsApp (para recibir el pase) <span className={styles.required} aria-hidden="true">*</span>
           </label>
           <div className={styles.phoneInputWrapper}>
             <span className={styles.phonePrefix}>BO +591</span>
             <input
+              id="booking-phone"
               type="tel"
+              inputMode="numeric"
+              autoComplete="tel-national"
               className={`${styles.input} ${styles.phoneInput}`}
               placeholder="Ej. 77218940"
               maxLength={8}

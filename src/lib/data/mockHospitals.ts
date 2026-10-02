@@ -14,7 +14,7 @@ export const MOCK_HOSPITALS: Hospital[] = [
   },
   {
     id: "cns-tarija",
-    name: "Hospital Obrero N° 7 · CNS Tarija",
+    name: "Hospital Obrero N° 7 (CNS Tarija)",
     city: "Tarija",
     address: "Av. La Paz esq. Belgrano",
     system: "CNS",
