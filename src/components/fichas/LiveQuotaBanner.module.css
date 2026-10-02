@@ -145,12 +145,21 @@
   font-size: 0.85rem;
   line-height: 1.45;
   color: #f0fdfa;
+  flex: 1;
+}
+
+.alertTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
 }
 
 .alertContent strong {
   display: block;
   font-weight: 700;
-  margin-bottom: 2px;
   color: #fef08a;
 }
 

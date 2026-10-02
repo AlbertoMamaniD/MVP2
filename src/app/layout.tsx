@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { Header } from "@/components/common/Header";
 import { Footer } from "@/components/common/Footer";
+import { SprintBadge } from "@/components/common/SprintBadge";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -54,11 +55,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${plusJakarta.variable} ${inter.variable}`}>
-      <body className="main-layout">
+    <html
+      lang="es"
+      className={`${plusJakarta.variable} ${inter.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="main-layout" suppressHydrationWarning>
         <Header />
-        <main style={{ flex: 1 }}>{children}</main>
+        <main style={{ flex: 1 }} suppressHydrationWarning>
+          {children}
+        </main>
         <Footer />
+        <SprintBadge />
       </body>
     </html>
   );

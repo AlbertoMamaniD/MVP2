@@ -2,6 +2,7 @@
 
 import React from "react";
 import { AvailableDay } from "@/lib/utils/formatters";
+import { CalendarIcon } from "@/components/common/Icons";
 import styles from "./DaySelector.module.css";
 
 interface DaySelectorProps {
@@ -19,7 +20,9 @@ export const DaySelector: React.FC<DaySelectorProps> = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <span className={styles.label}>📅 1. Selecciona el día de tu atención:</span>
+        <span className={styles.label}>
+          <CalendarIcon size={16} /> 1. Selecciona el día de tu atención:
+        </span>
         <span className={styles.subtext}>Cupos limitados por jornada</span>
       </div>
 

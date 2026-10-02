@@ -1,9 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { MedicalTicket } from "@/types/ticket";
 import { Badge } from "@/components/common/Badge";
+import { AudioPlayerButton } from "@/components/common/AudioPlayerButton";
 import { getWhatsAppShareUrl } from "@/lib/utils/whatsapp";
+import {
+  ClockIcon,
+  ShieldCheckIcon,
+  CopyIcon,
+  CheckIcon,
+  AlertTriangleIcon,
+  WhatsAppIcon,
+  UserCheckIcon,
+  PrintIcon,
+  ArrowRightIcon,
+  ArrowLeftIcon,
+} from "@/components/common/Icons";
 import styles from "./DigitalPass.module.css";
 
 interface DigitalPassProps {
@@ -14,6 +28,8 @@ interface DigitalPassProps {
 export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => {
   const [copied, setCopied] = useState(false);
   const whatsappUrl = getWhatsAppShareUrl(ticket);
+
+  const passSpeechText = `Ficha médica confirmada para ${ticket.patientName}, carnet de identidad ${ticket.ci}. Su turno es el número ${ticket.slotNumber} para la especialidad de ${ticket.specialtyName} con el médico ${ticket.doctorName} en el ${ticket.roomNumber}. Su hora sugerida de llegada es a las ${ticket.estimatedArrival}. No madrugue a las 4 de la mañana en el frío. Preséntese quince minutos antes con su cédula de identidad original.`;
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(ticket.tokenCode);
@@ -27,14 +43,23 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
 
   return (
     <div className={styles.wrapper}>
-      {/* Mensaje de certeza / Anti-madrugada */}
+      {/* Mensaje de certeza / Anti-madrugada con Audio para Adultos Mayores */}
       <div className={styles.heroAlert}>
-        <span className={styles.heroIcon}>🎉</span>
+        <span className={styles.heroIcon}>
+          <ShieldCheckIcon size={32} color="#ffffff" />
+        </span>
         <div className={styles.heroText}>
           <h2>¡Tu Ficha Médica está Asegurada!</h2>
           <p>
             No tienes que madrugar ni exponerte al frío de las 4:00 AM. Tu cupo está registrado a tu nombre y carnet de identidad.
           </p>
+          <div style={{ marginTop: "10px" }}>
+            <AudioPlayerButton
+              variant="banner"
+              label="Escuchar Datos de Mi Ficha en Voz Alta"
+              messageToRead={passSpeechText}
+            />
+          </div>
         </div>
       </div>
 
@@ -54,7 +79,9 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
         {/* Sección de Horario y Turno Grande */}
         <div className={styles.scheduleHighlight}>
           <div className={styles.timeBlock}>
-            <span className={styles.timeBlockLabel}>⏰ HORA SUGERIDA DE LLEGADA</span>
+            <span className={styles.timeBlockLabel}>
+              <ClockIcon size={13} /> HORA SUGERIDA DE LLEGADA
+            </span>
             <span className={styles.timeBlockValue}>{ticket.estimatedArrival}</span>
             <span className={styles.timeBlockHint}>Llega 15 min antes con tu Cédula de Identidad</span>
           </div>
@@ -112,7 +139,8 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
                 onClick={handleCopyCode}
                 title="Copiar código de ficha"
               >
-                {copied ? "✓ Copiado" : "📋 Copiar"}
+                {copied ? <CheckIcon size={12} /> : <CopyIcon size={12} />}
+                <span>{copied ? "Copiado" : "Copiar"}</span>
               </button>
             </div>
           </div>
@@ -145,7 +173,8 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
 
         {/* Nota legal / Dignidad */}
         <div className={styles.ticketLegalNotice}>
-          ⚠️ Ficha intransferible. Presenta tu Carnet físico en el consultorio. La atención es gratuita y respaldada por el SUS.
+          <AlertTriangleIcon size={14} />
+          <span>Ficha intransferible. Presenta tu Carnet físico en el consultorio. La atención es gratuita y respaldada por el SUS.</span>
         </div>
       </div>
 
@@ -157,16 +186,25 @@ export const DigitalPass: React.FC<DigitalPassProps> = ({ ticket, onClose }) => 
           rel="noopener noreferrer"
           className={styles.whatsappButton}
         >
-          <span>💬 Enviar o Guardar en WhatsApp</span>
+          <WhatsAppIcon size={18} />
+          <span>Enviar o Guardar en WhatsApp</span>
         </a>
 
+        <Link href="/personal" className={styles.staffViewButton}>
+          <UserCheckIcon size={18} />
+          <span>Ver Cómo Aparece en Ventanilla del Hospital</span>
+          <ArrowRightIcon size={14} />
+        </Link>
+
         <button className={styles.printButton} onClick={handlePrint}>
-          <span>🖨️ Imprimir o Guardar como PDF</span>
+          <PrintIcon size={17} />
+          <span>Imprimir o Guardar como PDF</span>
         </button>
 
         {onClose && (
           <button className={styles.backButton} onClick={onClose}>
-            ← Volver al Semáforo de Especialidades
+            <ArrowLeftIcon size={14} />
+            <span>Volver al Semáforo de Especialidades</span>
           </button>
         )}
       </div>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Modal } from "@/components/common/Modal";
 import { MedicalTicket } from "@/types/ticket";
 import { TicketService } from "@/lib/services/ticketService";
+import { ClockIcon, AlertTriangleIcon, ArrowRightIcon } from "@/components/common/Icons";
 import styles from "./SearchExistingTicketModal.module.css";
 
 interface SearchExistingTicketModalProps {
@@ -37,7 +38,7 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="🔍 Buscar Mi Ficha Médica">
+    <Modal isOpen={isOpen} onClose={onClose} title="Buscar Mi Ficha Médica">
       <div className={styles.container}>
         <p className={styles.intro}>
           Ingresa el Carnet de Identidad con el que reservaste para recuperar tu Pase Médico Digital.
@@ -72,7 +73,7 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
                       <span className={styles.specName}>{t.specialtyName}</span>
                       <span className={styles.hospitalName}>{t.hospitalName}</span>
                       <span className={styles.timeHighlight}>
-                        ⏰ Hora sugerida: <strong>{t.estimatedArrival}</strong> (Turno #{t.slotNumber})
+                        <ClockIcon size={13} /> Hora sugerida: <strong>{t.estimatedArrival}</strong> (Turno #{t.slotNumber})
                       </span>
                     </div>
                     <button
@@ -83,14 +84,17 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
                         handleReset();
                       }}
                     >
-                      Ver Pase Digital →
+                      <span>Ver Pase Digital</span>
+                      <ArrowRightIcon size={13} />
                     </button>
                   </div>
                 ))}
               </div>
             ) : (
               <div className={styles.notFound}>
-                <span className={styles.notFoundIcon}>⚠️</span>
+                <span className={styles.notFoundIcon}>
+                  <AlertTriangleIcon size={24} color="var(--text-muted)" />
+                </span>
                 <p>
                   No se encontraron fichas registradas para el carnet <strong>{ciInput}</strong> hoy.
                 </p>

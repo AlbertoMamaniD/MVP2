@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { MedicalTicket } from "@/types/ticket";
 import { Badge } from "@/components/common/Badge";
+import { RefreshIcon, CheckIcon, AlertTriangleIcon } from "@/components/common/Icons";
 import styles from "./ValidationScanner.module.css";
 
 interface ValidationScannerProps {
@@ -52,13 +53,15 @@ export const ValidationScanner: React.FC<ValidationScannerProps> = ({
         </div>
 
         <button className={styles.resetButton} onClick={onResetData} title="Reiniciar datos de prueba">
-          🔄 Reiniciar Simulación
+          <RefreshIcon size={14} />
+          <span>Reiniciar Simulación</span>
         </button>
       </div>
 
       {feedback && (
         <div className={`${styles.feedback} ${styles[feedback.type]}`}>
-          {feedback.type === "success" ? "✅" : "⚠️"} {feedback.text}
+          {feedback.type === "success" ? <CheckIcon size={16} /> : <AlertTriangleIcon size={16} />}
+          <span>{feedback.text}</span>
         </div>
       )}
 
@@ -120,10 +123,13 @@ export const ValidationScanner: React.FC<ValidationScannerProps> = ({
                 <div className={styles.colAction}>
                   {t.status !== "checked_in" ? (
                     <button className={styles.checkInBtn} onClick={() => handleVerify(t.id)}>
-                      ✓ Marcar Ingreso
+                      <CheckIcon size={14} />
+                      <span>Marcar Ingreso</span>
                     </button>
                   ) : (
-                    <span className={styles.checkedInLabel}>✓ En Espera</span>
+                    <span className={styles.checkedInLabel}>
+                      <CheckIcon size={13} /> En Espera
+                    </span>
                   )}
                 </div>
               </div>

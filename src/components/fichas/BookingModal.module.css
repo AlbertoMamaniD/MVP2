@@ -36,6 +36,33 @@
   color: var(--primary-700);
 }
 
+.demoFillRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.demoFillBtn {
+  background-color: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.demoFillBtn:hover {
+  background-color: #fde68a;
+  border-color: #f59e0b;
+  color: #78350f;
+  transform: translateY(-1px);
+}
+
 .errorAlert {
   background-color: var(--status-exhausted-bg);
   border: 1px solid var(--status-exhausted-border);

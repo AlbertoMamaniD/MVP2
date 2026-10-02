@@ -1,0 +1,120 @@
+.floatingTrigger {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  z-index: 45;
+}
+
+.triggerButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 10px 25px -5px rgb(15 23 42 / 0.4), 0 4px 6px -2px rgb(15 23 42 / 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.triggerButton:hover {
+  transform: translateY(-2px);
+  background: #1e293b;
+  box-shadow: 0 14px 28px -5px rgb(15 23 42 / 0.5);
+}
+
+.icon {
+  font-size: 1rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionTag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--primary-700);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sectionBody {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.45;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.card {
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardTitle {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.cardBody {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.flowList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.scopeNotice {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  background-color: var(--bg-subtle);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--border-medium);
+}
+
+@media (max-width: 540px) {
+  .floatingTrigger {
+    bottom: 12px;
+    right: 12px;
+  }
+
+  .triggerButton {
+    padding: 8px 12px;
+    font-size: 0.72rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

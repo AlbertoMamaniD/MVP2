@@ -2,6 +2,14 @@ import React from "react";
 import { Specialty } from "@/types/specialty";
 import { Badge } from "@/components/common/Badge";
 import { getQuotaStatusDetails } from "@/lib/services/quotaService";
+import {
+  DoctorIcon,
+  LocationIcon,
+  ClockIcon,
+  CheckIcon,
+  TicketIcon,
+  AlertTriangleIcon,
+} from "@/components/common/Icons";
 import styles from "./SpecialtyCard.module.css";
 
 interface SpecialtyCardProps {
@@ -29,15 +37,15 @@ export const SpecialtyCard: React.FC<SpecialtyCardProps> = ({ specialty, onBook 
 
       <div className={styles.doctorInfo}>
         <div className={styles.infoRow}>
-          <span className={styles.infoIcon}>👨‍⚕️</span>
+          <span className={styles.infoIcon}><DoctorIcon size={15} /></span>
           <span className={styles.doctorName}>{specialty.doctorName}</span>
         </div>
         <div className={styles.infoRow}>
-          <span className={styles.infoIcon}>📍</span>
+          <span className={styles.infoIcon}><LocationIcon size={15} /></span>
           <span>{specialty.roomNumber} · Turno {specialty.shift}</span>
         </div>
         <div className={styles.infoRow}>
-          <span className={styles.infoIcon}>⏰</span>
+          <span className={styles.infoIcon}><ClockIcon size={15} /></span>
           <span>Horario de atención: {specialty.consultationStart} - {specialty.consultationEnd}</span>
         </div>
       </div>
@@ -63,7 +71,10 @@ export const SpecialtyCard: React.FC<SpecialtyCardProps> = ({ specialty, onBook 
         <span className={styles.requirementsTitle}>Requisitos obligatorios:</span>
         <ul className={styles.requirementsList}>
           {specialty.requirements.map((req, idx) => (
-            <li key={idx}>✓ {req}</li>
+            <li key={idx}>
+              <span className={styles.reqCheck}><CheckIcon size={12} color="var(--primary-600)" /></span>
+              <span>{req}</span>
+            </li>
           ))}
         </ul>
       </div>
@@ -75,11 +86,12 @@ export const SpecialtyCard: React.FC<SpecialtyCardProps> = ({ specialty, onBook 
             className={`${styles.bookButton} ${specialty.status === "few" ? styles.fewButton : ""}`}
             onClick={() => onBook(specialty)}
           >
-            <span>{specialty.status === "few" ? "⚠️ Asegurar Ficha (Últimos cupos)" : "🎟️ Sacar Ficha Médica"}</span>
+            <TicketIcon size={17} />
+            <span>{specialty.status === "few" ? "Asegurar Último Cupo" : "Sacar Ficha Médica"}</span>
           </button>
         ) : (
           <div className={styles.exhaustedNotice}>
-            <span className={styles.exhaustedIcon}>🚫</span>
+            <AlertTriangleIcon size={16} />
             <span>Cupos agotados hoy. No hagas fila presencial.</span>
           </div>
         )}

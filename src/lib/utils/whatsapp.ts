@@ -1,20 +1,21 @@
 import { MedicalTicket } from "@/types/ticket";
 
 export function generateWhatsAppMessage(ticket: MedicalTicket): string {
-  const text = `🏥 *PASE MÉDICO DIGITAL (NO MADRUGAR)* 🏥
-━━━━━━━━━━━━━━━━━━━━
-📌 *Hospital:* ${ticket.hospitalName}
-🩺 *Especialidad:* ${ticket.specialtyName}
-👨‍⚕️ *Médico:* ${ticket.doctorName}
-📍 *Lugar:* ${ticket.roomNumber}
-━━━━━━━━━━━━━━━━━━━━
-🎟️ *Turno:* #${ticket.slotNumber.toString().padStart(2, "0")}
-👤 *Paciente:* ${ticket.patientName} (CI: ${ticket.ci})
-⏰ *Hora de Llegada:* ${ticket.estimatedArrival}
-⏱️ *Hora Consulta:* ${ticket.estimatedConsultation}
-🔐 *Código:* ${ticket.tokenCode}
-━━━━━━━━━━━━━━━━━━━━
-⚠️ *Tu ficha está reservada.* No hagas fila en la madrugada. Llega 15 minutos antes con tu Cédula de Identidad.`;
+  const text = `*SISTEMA ÚNICO DE SALUD (SUS) · BOLIVIA*
+*COMPROBANTE OFICIAL DE FICHA MÉDICA*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Hospital: ${ticket.hospitalName}
+• Especialidad: ${ticket.specialtyName}
+• Médico: ${ticket.doctorName}
+• Consultorio: ${ticket.roomNumber}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• TURNO ASIGNADO: #${ticket.slotNumber.toString().padStart(2, "0")}
+• Paciente: ${ticket.patientName} (CI: ${ticket.ci})
+• HORA SUGERIDA DE LLEGADA: ${ticket.estimatedArrival}
+• Hora Estimada Consulta: ${ticket.estimatedConsultation}
+• Código de Validación: ${ticket.tokenCode}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+*AVISO OFICIAL:* Su turno está reservado en el sistema hospitalario. No madrugue a las 4:00 AM en el frío. Preséntese 15 minutos antes directamente en el consultorio portando su Carnet de Identidad físico.`;
 
   return encodeURIComponent(text);
 }

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { formatCurrentDate } from "@/lib/utils/formatters";
 import { SearchExistingTicketModal } from "@/components/fichas/SearchExistingTicketModal";
+import { SearchIcon } from "@/components/common/Icons";
 import { MedicalTicket } from "@/types/ticket";
 import { useRouter } from "next/navigation";
 import styles from "./Header.module.css";
@@ -67,7 +68,8 @@ export const Header: React.FC<HeaderProps> = ({ activeTab = "home" }) => {
               onClick={() => setIsSearchOpen(true)}
               title="Buscar ficha guardada con Carnet de Identidad"
             >
-              <span>🔍 Ver Mi Ficha</span>
+              <SearchIcon size={14} />
+              <span>Ver Mi Ficha</span>
             </button>
 
             <nav className={styles.navLinks}>

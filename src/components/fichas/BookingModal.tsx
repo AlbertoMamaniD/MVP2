@@ -4,6 +4,12 @@ import React, { useState } from "react";
 import { Specialty } from "@/types/specialty";
 import { Modal } from "@/components/common/Modal";
 import { BookingPayload, MedicalTicket } from "@/types/ticket";
+import {
+  CalendarIcon,
+  BoltIcon,
+  AlertTriangleIcon,
+  ShieldCheckIcon,
+} from "@/components/common/Icons";
 import styles from "./BookingModal.module.css";
 
 interface BookingModalProps {
@@ -89,7 +95,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           <div className={styles.summaryItem}>
             <span className={styles.summaryLabel}>Fecha de Consulta:</span>
             <span className={styles.summaryValueHighlight}>
-              📅 {selectedDayLabel} {selectedDayFormatted ? `(${selectedDayFormatted})` : ""}
+              <CalendarIcon size={14} /> {selectedDayLabel} {selectedDayFormatted ? `(${selectedDayFormatted})` : ""}
             </span>
           </div>
           <div className={styles.summaryItem}>
@@ -106,9 +112,28 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           </div>
         </div>
 
+        {/* Botón Demo Express para Test Rápido */}
+        <div className={styles.demoFillRow}>
+          <button
+            type="button"
+            className={styles.demoFillBtn}
+            onClick={() => {
+              setCiNumber("7123456");
+              setCiExtension("TJ (Tarija)");
+              setPatientName("Roberto Cardozo Vaca");
+              setPhone("71829304");
+              setErrorMsg(null);
+            }}
+          >
+            <BoltIcon size={14} />
+            <span>Llenar Datos de Prueba (Demo Tarija)</span>
+          </button>
+        </div>
+
         {errorMsg && (
           <div className={styles.errorAlert}>
-            <span>⚠️ {errorMsg}</span>
+            <AlertTriangleIcon size={16} />
+            <span>{errorMsg}</span>
           </div>
         )}
 
@@ -165,7 +190,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             Número de WhatsApp (para recibir el pase): <span className={styles.required}>*</span>
           </label>
           <div className={styles.phoneInputWrapper}>
-            <span className={styles.phonePrefix}>🇧🇴 +591</span>
+            <span className={styles.phonePrefix}>BO +591</span>
             <input
               type="tel"
               className={`${styles.input} ${styles.phoneInput}`}
@@ -181,7 +206,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
         {/* Regla y Compromiso */}
         <div className={styles.noticeBox}>
-          <span className={styles.noticeIcon}>🛡️</span>
+          <span className={styles.noticeIcon}>
+            <ShieldCheckIcon size={18} color="var(--primary-700)" />
+          </span>
           <p>
             Al confirmar, te comprometes a presentarte <strong>15 minutos antes</strong> de tu turno. No necesitas hacer fila en la madrugada.
           </p>
