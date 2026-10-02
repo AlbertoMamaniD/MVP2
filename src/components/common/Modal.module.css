@@ -1,14 +1,13 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background-color: var(--bg-overlay);
-  backdrop-filter: blur(3px);
+  background-color: color-mix(in srgb, var(--brand) 55%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-md);
+  padding: var(--space-4);
   z-index: 100;
-  animation: overlayIn 0.18s ease-out;
+  animation: overlayIn 160ms ease-out;
 }
 
 @keyframes overlayIn {
@@ -17,17 +16,16 @@
 }
 
 .modalCard {
-  background-color: var(--bg-surface);
+  background-color: var(--surface);
   border-radius: var(--radius-lg);
   width: 100%;
-  max-width: 520px;
+  max-width: 480px;
   max-height: 90vh;
   overflow-y: auto;
   overscroll-behavior: contain;
-  box-shadow: var(--shadow-xl);
   display: flex;
   flex-direction: column;
-  animation: fadeIn 0.24s var(--ease-out);
+  animation: fadeIn 220ms ease-out;
 }
 
 .modalHeader {
@@ -37,41 +35,37 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 18px var(--space-lg) 14px;
-  border-bottom: 1px solid var(--border-light);
-  background-color: var(--bg-surface);
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-3) var(--space-6);
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--line);
 }
 
 .modalTitle {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--text-primary);
+  font: var(--type-subtitle);
 }
 
 .closeButton {
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-muted);
+  color: var(--brand);
 }
 
 .closeButton:hover {
-  background-color: var(--bg-subtle);
-  color: var(--text-primary);
+  background-color: var(--brand-tint);
 }
 
 .modalBody {
-  padding: var(--space-lg);
+  padding: var(--space-6);
 }
 
-/* En pantallas pequeñas el modal se comporta como hoja inferior */
-@media (max-width: 480px) {
+/* En el celular el modal es una hoja que sube desde abajo */
+@media (max-width: 520px) {
   .overlay {
     align-items: flex-end;
     padding: 0;
@@ -83,11 +77,10 @@
   }
 
   .modalHeader {
-    padding: 16px var(--space-md) 12px;
+    padding-left: var(--space-4);
   }
 
   .modalBody {
-    padding: var(--space-md);
-    padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom));
+    padding: var(--space-4) var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom));
   }
 }

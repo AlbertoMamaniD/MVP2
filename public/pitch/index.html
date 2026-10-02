@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sinfi | Presentación</title>
+<link rel="icon" href="/icon.jpg">
+<style>
+  html, body { margin: 0; height: 100%; background: #000080; overflow: hidden; }
+  iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+  /* Transición a la app al terminar la presentación */
+  .handoff {
+    position: fixed; inset: 0; background: #000080; opacity: 0;
+    pointer-events: none; transition: opacity 450ms ease;
+  }
+  .handoff.on { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .handoff { transition: none; } }
+</style>
+</head>
+<body>
+<!--
+  Envoltorio de la presentación. sinfi-pitch.html se sirve sin modificar.
+  Este archivo solo agrega un comportamiento: al intentar avanzar desde la
+  última diapositiva, abre la página principal del prototipo.
+-->
+<iframe id="pitch" src="/pitch/sinfi-pitch.html" title="Presentación de Sinfi" allow="fullscreen" allowfullscreen></iframe>
+<div class="handoff" id="handoff" aria-hidden="true"></div>
+
+<script>
+(function () {
+  var APP_URL = "/";
+  var NEXT_KEYS = ["ArrowRight", "PageDown", " ", "Enter"];
+  var frame = document.getElementById("pitch");
+  var handoff = document.getElementById("handoff");
+  var leaving = false;
+
+  function goToApp() {
+    if (leaving) return;
+    leaving = true;
+    handoff.classList.add("on");
+    setTimeout(function () { window.location.href = APP_URL; }, 450);
+  }
+
+  frame.addEventListener("load", function () {
+    var win = frame.contentWindow;
+    var doc = win.document;
+    var slides = doc.querySelectorAll("#stage .slide");
+    var last = slides[slides.length - 1];
+
+    // Se evalúa antes de que el pitch procese el evento (fase de captura),
+    // así el paso de la penúltima a la última diapositiva no dispara la salida.
+    function onLastSlide() {
+      return !!last && last.classList.contains("active");
+    }
+
+    win.addEventListener("keydown", function (e) {
+      if (NEXT_KEYS.indexOf(e.key) !== -1 && onLastSlide()) {
+        e.preventDefault();
+        goToApp();
+      }
+    }, true);
+
+    var viewport = doc.getElementById("viewport");
+    if (viewport) {
+      viewport.addEventListener("click", function (e) {
+        if (e.clientX > win.innerWidth * 0.3 && onLastSlide()) goToApp();
+      }, true);
+    }
+
+    var touchX = null;
+    win.addEventListener("touchstart", function (e) { touchX = e.touches[0].clientX; }, { capture: true, passive: true });
+    win.addEventListener("touchend", function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      touchX = null;
+      if (dx < -50 && onLastSlide()) goToApp();
+    }, { capture: true, passive: true });
+
+    // El teclado funciona sin hacer clic primero en la presentación
+    win.focus();
+  });
+
+  // Si el foco queda en esta página (fuera del iframe), también avanza a la app
+  document.addEventListener("keydown", function (e) {
+    if (NEXT_KEYS.indexOf(e.key) !== -1) frame.contentWindow.focus();
+  });
+})();
+</script>
+</body>
+</html>

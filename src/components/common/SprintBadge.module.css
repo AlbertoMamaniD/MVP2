@@ -9,21 +9,21 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #0f172a;
+  background: var(--brand);
   color: #ffffff;
   padding: 10px 16px;
   border-radius: var(--radius-full);
   font-size: 0.8rem;
   font-weight: 700;
-  box-shadow: 0 10px 25px -5px rgb(15 23 42 / 0.4), 0 4px 6px -2px rgb(15 23 42 / 0.2);
+  box-shadow: var(--shadow-card);
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .triggerButton:hover {
   transform: translateY(-2px);
-  background: #1e293b;
-  box-shadow: 0 14px 28px -5px rgb(15 23 42 / 0.5);
+  background: color-mix(in srgb, var(--brand) 85%, #000);
+  box-shadow: var(--shadow-card);
 }
 
 .icon {

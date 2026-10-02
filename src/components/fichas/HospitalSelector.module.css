@@ -1,21 +1,7 @@
 .selectorWrapper {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: var(--space-md);
-}
-
-.label {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.label svg {
-  color: var(--primary-700);
+  gap: var(--space-3);
 }
 
 .selectContainer {
@@ -24,35 +10,58 @@
   align-items: center;
 }
 
+.leadIcon {
+  position: absolute;
+  left: var(--space-4);
+  color: var(--brand);
+  pointer-events: none;
+}
+
 .select {
   width: 100%;
+  min-width: 0;
+  min-height: var(--control-height);
   appearance: none;
-  background-color: var(--bg-surface);
-  border: 1.5px solid var(--border-medium);
+  background-color: var(--surface);
+  border: 2px solid var(--line);
   border-radius: var(--radius-md);
-  padding: 13px 44px 13px 15px;
-  font-size: var(--text-md);
-  font-weight: 600;
-  color: var(--text-primary);
+  padding: 0 48px 0 48px;
+  font: 600 17px/22px var(--font-text);
+  color: var(--ink);
   cursor: pointer;
-  box-shadow: var(--shadow-xs);
   text-overflow: ellipsis;
-  transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
 }
 
 .select:hover {
-  border-color: var(--primary-500);
+  border-color: var(--brand);
 }
 
 .select:focus {
-  border-color: var(--primary-600);
-  outline: none;
-  box-shadow: var(--focus-ring);
+  border-color: var(--brand);
 }
 
 .arrowIcon {
   position: absolute;
-  right: 15px;
+  right: var(--space-4);
   pointer-events: none;
-  color: var(--text-muted);
+  color: var(--brand);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 0 var(--space-1);
+}
+
+.info dd {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font: var(--type-body-sm);
+  color: var(--muted);
+}
+
+.info dd svg {
+  margin-top: 3px;
 }

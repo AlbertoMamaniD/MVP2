@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useId } from "react";
 import { Specialty } from "@/types/specialty";
+import { Badge } from "@/components/common/Badge";
 import { getQuotaStatusDetails } from "@/lib/services/quotaService";
 import {
   DoctorIcon,
@@ -14,95 +15,96 @@ import styles from "./SpecialtyCard.module.css";
 interface SpecialtyCardProps {
   specialty: Specialty;
   onBook: (specialty: Specialty) => void;
+  isOpen?: boolean;
+  onToggle?: () => void;
+  dayLabel?: string;
 }
 
-export const SpecialtyCard: React.FC<SpecialtyCardProps> = ({ specialty, onBook }) => {
+/** Fila del semáforo de cupos (componente SemaforoCupos) que se despliega con el detalle. */
+export const SpecialtyCard: React.FC<SpecialtyCardProps> = ({
+  specialty,
+  onBook,
+  isOpen = false,
+  onToggle,
+  dayLabel = "Hoy",
+}) => {
+  const panelId = useId();
   const statusDetails = getQuotaStatusDetails(specialty.status, specialty.availableSlots);
   const isAvailable = specialty.availableSlots > 0;
+  const slotsText = isAvailable
+    ? `${dayLabel}, ${specialty.availableSlots} ${specialty.availableSlots === 1 ? "cupo" : "cupos"}`
+    : `${dayLabel}, sin cupos. Prueba otro día`;
+
+  const handleOtherDays = () => {
+    document.getElementById("elige-dia")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
-    <article className={`${styles.card} ${styles[specialty.status]}`}>
-      {/* 1. Especialidad y médico */}
-      <header className={styles.header}>
-        <h3 className={styles.specialtyName}>{specialty.name}</h3>
-        <p className={styles.doctor}>
-          <DoctorIcon size={15} />
-          <span>{specialty.doctorName}</span>
-        </p>
-      </header>
+    <article className={`${styles.row} ${!isAvailable ? styles.off : ""} ${isOpen ? styles.open : ""}`}>
+      <h3 className={styles.heading}>
+      <button
+        type="button"
+        className={styles.summary}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        onClick={onToggle}
+      >
+        <span className={styles.titleBlock}>
+          <span className={styles.name}>{specialty.name}</span>
+          <span className={styles.sub}>{slotsText}</span>
+        </span>
+        <Badge variant={statusDetails.variant}>{statusDetails.badgeText}</Badge>
+        <svg className={styles.chevron} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      </h3>
 
-      {/* 2. Contador de cupos: una celda por ficha, las libres primero */}
-      <section className={styles.quota} aria-label={statusDetails.label}>
-        <div className={styles.quotaTop}>
-          <span className={styles.statusLabel}>
-            <span className={styles.statusDot} aria-hidden="true" />
-            {statusDetails.badgeText}
-          </span>
-          <span className={styles.quotaCount}>
-            <strong>{specialty.availableSlots}</strong>
-            <span>de {specialty.totalSlots} cupos</span>
-          </span>
-        </div>
-        <div className={styles.slotTrack} aria-hidden="true">
-          {Array.from({ length: specialty.totalSlots }, (_, i) => (
-            <span
-              key={i}
-              className={`${styles.slot} ${i < specialty.availableSlots ? styles.slotFree : ""}`}
-            />
-          ))}
-        </div>
-      </section>
+      <div id={panelId} className={styles.panel} hidden={!isOpen}>
+        <dl className={styles.details}>
+          <div className={styles.detailRow}>
+            <dt><DoctorIcon size={16} /> Te atiende</dt>
+            <dd>{specialty.doctorName}</dd>
+          </div>
+          <div className={styles.detailRow}>
+            <dt><LocationIcon size={16} /> Dónde</dt>
+            <dd>{specialty.roomNumber}</dd>
+          </div>
+          <div className={styles.detailRow}>
+            <dt><ClockIcon size={16} /> Horario</dt>
+            <dd>{specialty.consultationStart} a {specialty.consultationEnd}, turno {specialty.shift.toLowerCase()}</dd>
+          </div>
+        </dl>
 
-      {/* 3. Consultorio y horario */}
-      <dl className={styles.details}>
-        <div className={styles.detailRow}>
-          <dt>
-            <LocationIcon size={14} />
-            Consultorio
-          </dt>
-          <dd>{specialty.roomNumber}</dd>
+        <div className={styles.requirements}>
+          <h4 className={styles.requirementsTitle}>Lleva contigo</h4>
+          <ul className={styles.requirementsList}>
+            {specialty.requirements.map((req, idx) => (
+              <li key={idx}>
+                <span className={styles.reqCheck} aria-hidden="true"><CheckIcon size={16} color="var(--brand)" /></span>
+                <span>{req}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className={styles.detailRow}>
-          <dt>
-            <ClockIcon size={14} />
-            Horario
-          </dt>
-          <dd>
-            {specialty.consultationStart} a {specialty.consultationEnd}, turno {specialty.shift.toLowerCase()}
-          </dd>
-        </div>
-      </dl>
 
-      {/* 4. Requisitos */}
-      <section className={styles.requirements}>
-        <h4 className={styles.requirementsTitle}>Requisitos obligatorios</h4>
-        <ul className={styles.requirementsList}>
-          {specialty.requirements.map((req, idx) => (
-            <li key={idx}>
-              <span className={styles.reqCheck} aria-hidden="true"><CheckIcon size={12} color="var(--primary-600)" /></span>
-              <span>{req}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* 5. Acción */}
-      <footer className={styles.actionArea}>
         {isAvailable ? (
-          <button
-            className={styles.bookButton}
-            onClick={() => onBook(specialty)}
-          >
-            <TicketIcon size={17} />
-            <span>{specialty.status === "few" ? "Asegurar Último Cupo" : "Sacar Ficha Médica"}</span>
+          <button type="button" className="btn btn-primary" onClick={() => onBook(specialty)}>
+            <TicketIcon size={20} />
+            <span>Reservar mi ficha</span>
           </button>
         ) : (
-          <div className={styles.exhaustedNotice}>
-            <AlertTriangleIcon size={16} />
-            <span>Cupos agotados hoy. No hagas fila presencial.</span>
+          <div className={styles.exhaustedBlock}>
+            <p className={styles.exhaustedNotice}>
+              <AlertTriangleIcon size={18} />
+              <span>Cupos agotados hoy. No hagas fila presencial.</span>
+            </p>
+            <button type="button" className="btn btn-secondary" onClick={handleOtherDays}>
+              Ver otros días
+            </button>
           </div>
         )}
-      </footer>
+      </div>
     </article>
   );
 };

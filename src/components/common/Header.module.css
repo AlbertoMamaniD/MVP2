@@ -1,231 +1,79 @@
 .header {
-  background-color: rgb(255 255 255 / 0.86);
-  border-bottom: 1px solid var(--border-light);
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: saturate(160%) blur(10px);
-  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--line);
 }
 
-.headerContainer {
+.bar {
+  min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  gap: var(--space-md);
+  gap: var(--space-4);
 }
 
 .brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  padding: var(--space-1) 0;
   border-radius: var(--radius-sm);
 }
 
-.logoIcon {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-md);
-  background-color: var(--primary-700);
-  color: #ffffff;
+.nav {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 -2px 0 rgb(0 0 0 / 0.18);
+  align-items: stretch;
+  align-self: stretch;
+  gap: var(--space-1);
 }
 
-.brandText {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.titleRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.brandTitle {
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-}
-
-.boliviaBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  color: var(--text-secondary);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  padding: 2px 7px 2px 5px;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-full);
-  background-color: var(--bg-surface);
-  line-height: 1.3;
-}
-
-.flagStripes {
-  display: flex;
-  flex-direction: column;
-  width: 12px;
-  height: 9px;
-  border-radius: 2px;
-  overflow: hidden;
-  box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.12);
-}
-
-.stripeRed {
-  flex: 1;
-  background-color: var(--bolivia-red);
-}
-
-.stripeYellow {
-  flex: 1;
-  background-color: var(--bolivia-yellow);
-}
-
-.stripeGreen {
-  flex: 1;
-  background-color: var(--bolivia-green);
-}
-
-.brandSubtitle {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-.rightNav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.liveClock {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 6px 4px;
-}
-
-.liveDot {
-  width: 7px;
-  height: 7px;
-  background-color: var(--status-available-dot);
-  border-radius: 50%;
-  animation: pulseGlow 2.4s infinite ease-in-out;
-}
-
-.dateText {
-  font-size: var(--text-xs);
-  font-weight: 500;
-  color: var(--text-muted);
-}
-
-.dateText::first-letter {
-  text-transform: uppercase;
-}
-
-.searchPill {
+.navItem {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-medium);
-  color: var(--primary-800);
-  padding: 7px 13px;
-  border-radius: var(--radius-full);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  padding: 0 var(--space-3);
+  font: var(--type-label);
+  color: var(--muted);
+  border-radius: var(--radius-sm);
 }
 
-.searchPill:hover {
-  background-color: var(--primary-50);
-  border-color: var(--primary-500);
-  color: var(--primary-900);
+.navItem:hover {
+  color: var(--brand);
 }
 
-.navLinks {
-  display: flex;
-  gap: 2px;
-  padding: 3px;
-  background-color: var(--bg-subtle);
-  border-radius: var(--radius-full);
+/* Indicador de sección activa: barra azul pegada al borde inferior */
+.navItem.active {
+  color: var(--brand);
 }
 
-.navLink {
-  padding: 6px 13px;
-  border-radius: var(--radius-full);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--text-secondary);
-  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
-}
-
-.navLink:hover {
-  color: var(--primary-800);
-}
-
-.navLink.active {
-  background-color: var(--bg-surface);
-  color: var(--primary-800);
-  box-shadow: var(--shadow-xs), 0 0 0 1px var(--border-light);
-}
-
-@media (max-width: 860px) {
-  .liveClock {
-    display: none;
-  }
-}
-
-@media (max-width: 560px) {
-  .brandSubtitle {
-    display: none;
-  }
-
-  .logoIcon {
-    width: 36px;
-    height: 36px;
-  }
-
-  .searchPill {
-    padding: 7px 10px;
-  }
-
-  .searchPill span {
-    display: none;
-  }
-
-  .navLink {
-    padding: 6px 10px;
-    font-size: var(--text-xs);
-  }
+.navItem.active::after {
+  content: "";
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: -1px;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background-color: var(--brand);
 }
 
 @media (max-width: 420px) {
-  .headerContainer {
-    gap: 8px;
+  .bar {
+    gap: var(--space-2);
   }
 
-  .rightNav {
-    gap: 6px;
+  .navItem {
+    padding: 0 var(--space-2);
   }
 
-  /* Solo la bandera; el texto "Bolivia" se oculta visualmente */
-  .boliviaBadge {
-    font-size: 0;
-    gap: 0;
-    padding: 4px;
+  .navItem.active::after {
+    left: var(--space-2);
+    right: var(--space-2);
   }
 
-  .navLink {
-    padding: 6px 8px;
+  .navItem svg {
+    display: none;
   }
 }

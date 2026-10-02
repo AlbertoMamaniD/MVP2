@@ -1,21 +1,22 @@
 import { MedicalTicket } from "@/types/ticket";
 
 export function generateWhatsAppMessage(ticket: MedicalTicket): string {
-  const text = `*SISTEMA ÚNICO DE SALUD (SUS) · BOLIVIA*
-*COMPROBANTE OFICIAL DE FICHA MÉDICA*
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• Hospital: ${ticket.hospitalName}
-• Especialidad: ${ticket.specialtyName}
-• Médico: ${ticket.doctorName}
-• Consultorio: ${ticket.roomNumber}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• TURNO ASIGNADO: #${ticket.slotNumber.toString().padStart(2, "0")}
-• Paciente: ${ticket.patientName} (CI: ${ticket.ci})
-• HORA SUGERIDA DE LLEGADA: ${ticket.estimatedArrival}
-• Hora Estimada Consulta: ${ticket.estimatedConsultation}
-• Código de Validación: ${ticket.tokenCode}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-*AVISO OFICIAL:* Su turno está reservado en el sistema hospitalario. No madrugue a las 4:00 AM en el frío. Preséntese 15 minutos antes directamente en el consultorio portando su Carnet de Identidad físico.`;
+  const text = `*Tu ficha Sinfi está reservada*
+
+*${ticket.specialtyName}*
+${ticket.hospitalName}
+
+Turno: *${ticket.slotNumber}*
+Llega a las: *${ticket.estimatedArrival}*
+Consulta cerca de las: ${ticket.estimatedConsultation}
+Te atiende: ${ticket.doctorName}
+Dónde: ${ticket.roomNumber}
+
+Paciente: ${ticket.patientName}
+Carnet: ${ticket.ci}
+Código: *${ticket.tokenCode}*
+
+No necesitas madrugar. Preséntate 15 minutos antes con tu carnet y muestra este código en ventanilla.`;
 
   return encodeURIComponent(text);
 }

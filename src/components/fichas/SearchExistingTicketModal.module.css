@@ -1,13 +1,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-4);
 }
 
 .intro {
-  font-size: var(--text-base);
-  color: var(--text-secondary);
-  line-height: 1.5;
+  font: var(--type-body);
+  color: var(--ink);
 }
 
 .form {
@@ -17,70 +16,54 @@
 
 .searchRow {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .input {
   flex: 1;
   min-width: 0;
-  padding: 12px 14px;
-  border: 1.5px solid var(--border-medium);
+  min-height: var(--control-height);
+  padding: 0 var(--space-4);
+  border: 2px solid var(--line);
   border-radius: var(--radius-md);
-  font-size: var(--text-md);
   font-weight: 600;
-  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
-  transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
 }
 
+.input:hover,
 .input:focus {
-  border-color: var(--primary-600);
-  outline: none;
-  box-shadow: var(--focus-ring);
+  border-color: var(--brand);
 }
 
 .searchButton {
-  padding: 12px 22px;
-  background-color: var(--primary-700);
-  color: #ffffff;
-  border-radius: var(--radius-md);
-  font-weight: 700;
-  font-size: var(--text-base);
-  box-shadow: inset 0 -2px 0 rgb(0 0 0 / 0.15);
-}
-
-.searchButton:hover {
-  background-color: var(--primary-800);
+  width: auto;
+  padding: 0 var(--space-6);
 }
 
 .resultsArea {
-  margin-top: var(--space-xs);
-  animation: fadeIn 0.2s var(--ease-out);
+  animation: fadeIn 200ms ease-out;
 }
 
 .resultsList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-2);
 }
 
 .resultsCount {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--text-muted);
+  font: var(--type-body-sm);
+  color: var(--muted);
 }
 
 .ticketResultCard {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-light);
-  border-left: 4px solid var(--primary-600);
+  background-color: var(--surface);
+  border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  padding: 14px 16px;
+  padding: var(--space-3) var(--space-4);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  box-shadow: var(--shadow-xs);
+  gap: var(--space-3);
 }
 
 .ticketResultMeta {
@@ -91,58 +74,54 @@
 }
 
 .specName {
-  font-family: var(--font-display);
-  font-size: var(--text-md);
-  font-weight: 700;
-  color: var(--text-primary);
+  font: var(--type-subtitle);
+  color: var(--ink);
 }
 
 .hospitalName {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
+  font: var(--type-caption);
+  color: var(--muted);
 }
 
 .timeHighlight {
   display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 5px;
-  font-size: var(--text-sm);
-  color: var(--primary-800);
-  margin-top: 4px;
-  font-variant-numeric: tabular-nums;
+  gap: var(--space-1);
+  font: var(--type-body-sm);
+  color: var(--ink);
+  margin-top: var(--space-1);
 }
 
 .viewButton {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 9px 14px;
-  background-color: var(--primary-700);
-  color: #ffffff;
-  border-radius: var(--radius-sm);
-  font-size: var(--text-sm);
-  font-weight: 700;
+  gap: var(--space-1);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 2px solid var(--brand);
+  border-radius: var(--radius-md);
+  font: var(--type-label);
+  color: var(--brand);
   white-space: nowrap;
 }
 
 .viewButton:hover {
-  background-color: var(--primary-800);
+  background-color: var(--brand-tint);
 }
 
 .notFound {
-  background-color: var(--bg-subtle);
+  background-color: var(--bg);
   border-radius: var(--radius-md);
-  padding: 20px var(--space-md);
+  padding: var(--space-6) var(--space-4);
   text-align: center;
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  line-height: 1.5;
+  font: var(--type-body-sm);
+  color: var(--ink);
 }
 
 .notFoundIcon {
   display: inline-flex;
-  margin-bottom: 6px;
+  margin-bottom: var(--space-2);
 }
 
 @media (max-width: 480px) {

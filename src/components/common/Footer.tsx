@@ -1,41 +1,38 @@
 import React from "react";
 import styles from "./Footer.module.css";
+import { Logo } from "@/components/common/Logo";
 import { LockIcon, ClockIcon, ShieldCheckIcon } from "@/components/common/Icons";
 
 export const Footer: React.FC = () => {
   return (
     <footer className={styles.footer}>
-      <div className={`container ${styles.footerContainer}`}>
-        <div className={styles.infoSection}>
-          <div className={styles.badgeRow}>
-            <span className={styles.tag}>Sistema Único de Salud (SUS)</span>
-            <span className={styles.tag}>Bolivia</span>
-          </div>
+      <div className={`container ${styles.inner}`}>
+        <div className={styles.brandBlock}>
+          <Logo variant="inverse" size={30} />
+          <p className={styles.slogan}>Sin filas. Atiende a tiempo.</p>
           <p className={styles.description}>
-            Iniciativa cívica digital para eliminar las filas de madrugada y la reventa de fichas en hospitales públicos bolivianos. La atención en el SUS es 100% gratuita.
+            Nadie debería pasar la madrugada en una fila para que lo atiendan. Con Sinfi ves tu cupo antes de salir,
+            tienes una hora de llegada y nadie te quita tu lugar. La atención en el SUS es gratuita.
           </p>
         </div>
 
-        <div className={styles.rulesSummary}>
-          <div className={styles.ruleItem}>
-            <span className={styles.ruleIcon}><LockIcon size={16} /></span>
-            <span>1 ficha por Cédula de Identidad al día.</span>
-          </div>
-          <div className={styles.ruleItem}>
-            <span className={styles.ruleIcon}><ClockIcon size={16} /></span>
-            <span>Preséntate 15 minutos antes de tu hora con tu Carnet.</span>
-          </div>
-          <div className={styles.ruleItem}>
-            <span className={styles.ruleIcon}><ShieldCheckIcon size={16} /></span>
-            <span>Evita la compra de puestos callejeros y colados.</span>
-          </div>
-        </div>
+        <ul className={styles.rules}>
+          <li>
+            <LockIcon size={18} />
+            <span>Una ficha por carnet al día.</span>
+          </li>
+          <li>
+            <ClockIcon size={18} />
+            <span>Llega 15 minutos antes con tu carnet.</span>
+          </li>
+          <li>
+            <ShieldCheckIcon size={18} />
+            <span>No compres puestos en la fila: tu ficha es gratis y es tuya.</span>
+          </li>
+        </ul>
       </div>
-      <div className={styles.subFooter}>
-        <p>
-          <span>© {new Date().getFullYear()} FichaYa</span>
-          <span>Transparencia y dignidad en la salud pública</span>
-        </p>
+      <div className={styles.bottom}>
+        <p className="container">© {new Date().getFullYear()} Sinfi, Bolivia</p>
       </div>
     </footer>
   );

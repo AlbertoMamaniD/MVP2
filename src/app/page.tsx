@@ -11,6 +11,7 @@ import { SpecialtyList } from "@/components/fichas/SpecialtyList";
 import { BookingModal } from "@/components/fichas/BookingModal";
 import { DigitalPass } from "@/components/fichas/DigitalPass";
 import { getAvailableDays, AvailableDay } from "@/lib/utils/formatters";
+import styles from "./page.module.css";
 
 const INITIAL_DAYS: AvailableDay[] = getAvailableDays();
 
@@ -38,49 +39,58 @@ export default function HomePage() {
 
   const handleBookingSuccess = (ticket: MedicalTicket) => {
     setActiveTicket(ticket);
+    window.scrollTo({ top: 0 });
   };
 
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "20px", paddingBottom: "56px" }}
-      suppressHydrationWarning
-    >
-      {/* Si el paciente acaba de sacar una ficha, mostramos su Pase Digital inmediatamente */}
+    <div className={`container ${styles.page}`} suppressHydrationWarning>
+      {/* Si el paciente acaba de sacar una ficha, mostramos su ficha digital */}
       {activeTicket ? (
-        <div style={{ marginTop: "12px" }}>
-          <DigitalPass ticket={activeTicket} onClose={() => setActiveTicket(null)} />
-        </div>
+        <DigitalPass ticket={activeTicket} onClose={() => setActiveTicket(null)} />
       ) : (
         <>
-          {/* Selector de Hospital de Referencia */}
-          <HospitalSelector selectedId={hospitalId} onSelect={setHospitalId} />
-
-          {/* Banner Principal de Certeza y Semáforo de Cupos */}
           <LiveQuotaBanner
             hospital={currentHospital}
             totalAvailable={totalAvailable}
             selectedDayLabel={selectedDay?.label || "Hoy"}
           />
 
-          {/* Selector de Días Disponibles (Must Have del Documento) */}
+          <section className={styles.step} aria-labelledby="paso-hospital">
+            <h2 id="paso-hospital" className={styles.stepTitle}>
+              <span className={styles.stepNumber} aria-hidden="true">1</span>
+              Elige tu hospital
+            </h2>
+            <HospitalSelector selectedId={hospitalId} onSelect={setHospitalId} />
+          </section>
+
           {days.length > 0 && (
-            <DaySelector
-              days={days}
-              selectedDayId={selectedDayId}
-              onSelectDay={setSelectedDayId}
-            />
+            <section className={styles.step} id="elige-dia" aria-labelledby="paso-dia">
+              <h2 id="paso-dia" className={styles.stepTitle}>
+                <span className={styles.stepNumber} aria-hidden="true">2</span>
+                Elige el día
+              </h2>
+              <DaySelector
+                days={days}
+                selectedDayId={selectedDayId}
+                onSelectDay={setSelectedDayId}
+              />
+            </section>
           )}
 
-          {/* Listado y Filtros de Especialidades */}
-          <SpecialtyList
-            specialties={specialties}
-            onBookSpecialty={handleOpenBooking}
-          />
+          <section className={styles.step} id="elige-especialidad" aria-labelledby="paso-especialidad">
+            <h2 id="paso-especialidad" className={styles.stepTitle}>
+              <span className={styles.stepNumber} aria-hidden="true">3</span>
+              Elige tu especialidad
+            </h2>
+            <SpecialtyList
+              specialties={specialties}
+              onBookSpecialty={handleOpenBooking}
+              dayLabel={selectedDay?.label || "Hoy"}
+            />
+          </section>
         </>
       )}
 
-      {/* Modal de Reserva con Carnet */}
       <BookingModal
         isOpen={isModalOpen}
         specialty={selectedSpecialty}
@@ -89,6 +99,7 @@ export default function HomePage() {
         onSuccess={handleBookingSuccess}
         selectedDayLabel={selectedDay?.label}
         selectedDayFormatted={selectedDay?.dateFormatted}
+        selectedDayId={selectedDay?.id}
       />
     </div>
   );

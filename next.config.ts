@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // La presentación vive en public/pitch/ y se abre en /pitch
+  async rewrites() {
+    return [
+      {
+        source: "/pitch",
+        destination: "/pitch/index.html",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

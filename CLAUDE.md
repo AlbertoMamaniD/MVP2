@@ -38,7 +38,7 @@ Domain rules live in the services, not in components:
 
 Known quirks to be aware of:
 - `getSpecialties(hospitalId)` falls back to cloning *all* specialties with the requested `hospitalId` when a hospital has no specialties of its own, but `createBooking` looks up the unfiltered list. A ticket booked at such a hospital therefore gets the original specialty's hospital.
-- The day picker (`DaySelector` / `getAvailableDays`, which skips Sundays) is display-only. `BookingPayload` has no date, and tickets are always stamped with today's date.
+- The calendar (`DaySelector`) offers the next 14 days from `getAvailableDays()`, without Sundays. The chosen date travels in `BookingPayload.date` and is stamped on the ticket, but quotas are not tracked per day: every day shows the same `availableSlots`. Dates are built with `toLocalIsoDate` because `toISOString()` is UTC and shifts the day in Bolivia (UTC-4).
 - The default hospital is `hrsjdd-tarija` on the home page but `hosp-clinicas-lp` in `useTickets`. The staff panel calls `useTickets()` with no argument.
 
 ## Code layout conventions
@@ -46,5 +46,7 @@ Known quirks to be aware of:
 - Path alias `@/*` → `src/*`.
 - Domain types live in `src/types/` (`hospital`, `specialty`, `ticket`); mock seed data lives in `src/lib/data/`.
 - Components are grouped by audience: `common/` (Header, Footer, Badge, Modal), `fichas/` (patient flow) and `staff/` (validation scanner). Each component has a sibling `*.module.css`.
-- Design tokens (colors, shadows, radii, font variables) are CSS custom properties in `src/styles/tokens.css`. Use them rather than hard-coded values. Fonts (Plus Jakarta Sans for headings, Inter for body) are loaded with `next/font` in `src/app/layout.tsx`, which sets `--font-heading` and `--font-sans` on `<html>`. In CSS, use `--font-display` and `--font-body` from `tokens.css`, which add fallbacks. Never redefine `--font-sans` or `--font-heading` in terms of themselves: a self-referencing custom property is invalid and the page falls back to serif.
+- **Design system: Sinfi** (`design/sinfi-design-system/`, source of truth: `tokens.json` and each component `README.md`). Tokens are mirrored in `src/styles/tokens.css`: `--bg`, `--surface`, `--brand` (#000080), `--on-brand`, `--ink`, `--muted`, `--line`, `--state-*`, the `--type-*` font shorthands, `--space-*`, `--radius-*` and `--shadow-card`. Rules: only navy and bluish white as brand colors; green, amber and red (`--state-*`) only for the quota traffic light, always with a dot and a word; 17px base text; buttons 52px tall, one primary action per screen (global `.btn .btn-primary` / `.btn-secondary` in `globals.css`); the notched ticket is the only graphic motif. Copy uses tuteo, short sentences, "ficha" not "ticket". The old token names (`--primary-*`, `--text-*`, `--border-*`) remain only as aliases for older components.
+- Fonts (Plus Jakarta Sans for headings, Inter for body) are loaded with `next/font` in `src/app/layout.tsx`, which sets `--font-heading` and `--font-sans` on `<html>`. In CSS, use `--font-display` and `--font-text` from `tokens.css`. Never redefine `--font-sans` or `--font-heading` in terms of themselves: a self-referencing custom property is invalid and the page falls back to serif.
+- The logo is the `Logo` component (`src/components/common/Logo.tsx`, SVG rebuilt from the official JPG). The favicon is `src/app/icon.jpg` / `apple-icon.jpg`.
 - WhatsApp sharing links are built in `src/lib/utils/whatsapp.ts`: `wa.me/<phone>` when a phone number is present, otherwise `api.whatsapp.com/send`.

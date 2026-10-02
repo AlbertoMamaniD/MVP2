@@ -38,10 +38,10 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Buscar Mi Ficha Médica">
+    <Modal isOpen={isOpen} onClose={onClose} title="Busca tu ficha">
       <div className={styles.container}>
         <p className={styles.intro}>
-          Ingresa el Carnet de Identidad con el que reservaste para recuperar tu Pase Médico Digital.
+          Escribe el carnet con el que reservaste y te mostramos tu ficha.
         </p>
 
         <form onSubmit={handleSearch} className={styles.form}>
@@ -49,14 +49,14 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
             <input
               type="text"
               inputMode="numeric"
-              aria-label="Carnet de Identidad"
+              aria-label="Tu número de carnet"
               className={styles.input}
               placeholder="Ej. 6849201"
               value={ciInput}
               onChange={(e) => setCiInput(e.target.value)}
               autoFocus
             />
-            <button type="submit" className={styles.searchButton}>
+            <button type="submit" className={`btn btn-primary ${styles.searchButton}`}>
               Buscar
             </button>
           </div>
@@ -77,7 +77,7 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
                       <span className={styles.specName}>{t.specialtyName}</span>
                       <span className={styles.hospitalName}>{t.hospitalName}</span>
                       <span className={styles.timeHighlight}>
-                        <ClockIcon size={13} /> Hora sugerida: <strong>{t.estimatedArrival}</strong> (Turno #{t.slotNumber})
+                        <ClockIcon size={14} /> Llega a las <strong>{t.estimatedArrival}</strong>, turno {t.slotNumber}
                       </span>
                     </div>
                     <button
@@ -88,8 +88,8 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
                         handleReset();
                       }}
                     >
-                      <span>Ver Pase Digital</span>
-                      <ArrowRightIcon size={13} />
+                      <span>Ver mi ficha</span>
+                      <ArrowRightIcon size={16} />
                     </button>
                   </div>
                 ))}
@@ -97,10 +97,10 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
             ) : (
               <div className={styles.notFound}>
                 <span className={styles.notFoundIcon} aria-hidden="true">
-                  <AlertTriangleIcon size={24} color="var(--text-muted)" />
+                  <AlertTriangleIcon size={24} color="var(--brand)" />
                 </span>
                 <p>
-                  No se encontraron fichas registradas para el carnet <strong>{ciInput}</strong> hoy.
+                  No encontramos fichas para el carnet <strong>{ciInput}</strong>. Revisa el número o reserva una nueva.
                 </p>
               </div>
             )}

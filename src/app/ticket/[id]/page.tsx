@@ -25,7 +25,7 @@ export default function TicketDetailPage() {
   if (loading) {
     return (
       <div className="container" style={{ textAlign: "center", padding: "64px 16px" }}>
-        <p>Cargando información del ticket médico...</p>
+        <p>Buscando tu ficha...</p>
       </div>
     );
   }
@@ -33,23 +33,16 @@ export default function TicketDetailPage() {
   if (!ticket) {
     return (
       <div className="container" style={{ textAlign: "center", padding: "64px 16px" }}>
-        <h2>Ficha Médica No Encontrada</h2>
-        <p style={{ marginTop: "8px", color: "var(--text-secondary)" }}>
-          El código o identificador <strong>{ticketId}</strong> no corresponde a una ficha registrada hoy.
+        <h1 style={{ font: "var(--type-title)" }}>No encontramos esta ficha</h1>
+        <p style={{ marginTop: "8px", color: "var(--muted)" }}>
+          El código <strong>{ticketId}</strong> no corresponde a ninguna ficha. Revisa el código o reserva una nueva.
         </p>
         <Link
           href="/"
-          style={{
-            display: "inline-block",
-            marginTop: "20px",
-            padding: "12px 22px",
-            backgroundColor: "var(--primary-700)",
-            color: "#ffffff",
-            borderRadius: "var(--radius-md)",
-            fontWeight: 700,
-          }}
+          className="btn btn-primary"
+          style={{ marginTop: "24px", maxWidth: "320px" }}
         >
-          Volver al Semáforo de Cupos
+          Ver cupos de hoy
         </Link>
       </div>
     );

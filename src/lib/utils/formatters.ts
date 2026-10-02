@@ -3,56 +3,53 @@
  */
 
 export interface AvailableDay {
-  id: string; // "YYYY-MM-DD"
-  label: string; // "Hoy", "Mañana", etc.
+  id: string; // "YYYY-MM-DD" en hora local
+  label: string; // "Hoy", "Mañana", "Lunes 12"
   dayName: string; // "Viernes"
-  dateFormatted: string; // "Viernes, 02 de Octubre"
+  dateFormatted: string; // "viernes 2 de octubre"
   shortDate: string; // "02/10"
   isToday: boolean;
 }
 
-export function getAvailableDays(): AvailableDay[] {
+const DAY_NAMES = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+const MONTH_NAMES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+
+/** "YYYY-MM-DD" con la fecha local (toISOString usa UTC y adelanta el día en la noche). */
+export function toLocalIsoDate(d: Date): string {
+  const y = d.getFullYear();
+  const m = (d.getMonth() + 1).toString().padStart(2, "0");
+  const day = d.getDate().toString().padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+/**
+ * Días en los que se puede reservar: desde hoy y durante `windowDays` días,
+ * sin domingos (no hay consulta regular en hospitales públicos).
+ */
+export function getAvailableDays(windowDays: number = 14): AvailableDay[] {
   const days: AvailableDay[] = [];
   const base = new Date();
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < windowDays; i++) {
     const d = new Date(base);
     d.setDate(base.getDate() + i);
 
-    // Si es domingo, saltar o marcar
     const dayOfWeek = d.getDay();
-    if (dayOfWeek === 0) continue; // Los domingos no hay consulta regular en hospitales públicos
+    if (dayOfWeek === 0) continue;
 
-    let label = "";
+    const dayName = DAY_NAMES[dayOfWeek];
+    let label = `${dayName} ${d.getDate()}`;
     if (i === 0) label = "Hoy";
     else if (i === 1) label = "Mañana";
-    else {
-      const dayNames = ["Dom", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-      label = dayNames[dayOfWeek];
-    }
-
-    const isoDate = d.toISOString().split("T")[0];
-    const dayName = d.toLocaleDateString("es-BO", { weekday: "long" });
-    const capitalizedDay = dayName.charAt(0).toUpperCase() + dayName.slice(1);
-    
-    const dateFormatted = d.toLocaleDateString("es-BO", {
-      weekday: "long",
-      day: "2-digit",
-      month: "short",
-    });
-
-    const shortDate = `${d.getDate().toString().padStart(2, "0")}/${(d.getMonth() + 1).toString().padStart(2, "0")}`;
 
     days.push({
-      id: isoDate,
+      id: toLocalIsoDate(d),
       label,
-      dayName: capitalizedDay,
-      dateFormatted,
-      shortDate,
+      dayName,
+      dateFormatted: `${dayName.toLowerCase()} ${d.getDate()} de ${MONTH_NAMES[d.getMonth()]}`,
+      shortDate: `${d.getDate().toString().padStart(2, "0")}/${(d.getMonth() + 1).toString().padStart(2, "0")}`,
       isToday: i === 0,
     });
-
-    if (days.length >= 3) break;
   }
 
   return days;

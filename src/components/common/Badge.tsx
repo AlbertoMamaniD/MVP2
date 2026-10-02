@@ -4,13 +4,15 @@ import styles from "./Badge.module.css";
 interface BadgeProps {
   variant: "success" | "warning" | "danger" | "neutral" | "info";
   children: React.ReactNode;
+  /** Se mantiene por compatibilidad: el punto se muestra siempre. */
   pulse?: boolean;
 }
 
-export const Badge: React.FC<BadgeProps> = ({ variant, children, pulse = false }) => {
+/** Cada estado combina color, punto y palabra para no depender del color. */
+export const Badge: React.FC<BadgeProps> = ({ variant, children }) => {
   return (
     <span className={`${styles.badge} ${styles[variant]}`}>
-      {pulse && <span className={styles.dot} />}
+      <span className={styles.dot} aria-hidden="true" />
       {children}
     </span>
   );

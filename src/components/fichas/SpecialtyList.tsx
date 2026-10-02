@@ -9,13 +9,22 @@ import styles from "./SpecialtyList.module.css";
 interface SpecialtyListProps {
   specialties: Specialty[];
   onBookSpecialty: (specialty: Specialty) => void;
+  dayLabel?: string;
 }
 
 type FilterType = "all" | QuotaStatus;
 
-export const SpecialtyList: React.FC<SpecialtyListProps> = ({ specialties, onBookSpecialty }) => {
+const FILTERS: { id: FilterType; label: string; dot?: string }[] = [
+  { id: "all", label: "Todas" },
+  { id: "available", label: "Disponibles", dot: "ok" },
+  { id: "few", label: "Últimos cupos", dot: "warn" },
+  { id: "exhausted", label: "Agotadas", dot: "danger" },
+];
+
+export const SpecialtyList: React.FC<SpecialtyListProps> = ({ specialties, onBookSpecialty, dayLabel = "Hoy" }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const filteredSpecialties = useMemo(() => {
     return specialties.filter((s) => {
@@ -40,83 +49,77 @@ export const SpecialtyList: React.FC<SpecialtyListProps> = ({ specialties, onBoo
   }, [specialties]);
 
   return (
-    <section className={styles.wrapper} aria-labelledby="specialties-title">
-      <div className={styles.sectionHeader}>
-        <h2 id="specialties-title" className={styles.sectionTitle}>Especialidades</h2>
-        <p className={styles.sectionSummary}>
-          {counts.available + counts.few} de {counts.all} con cupos para reservar
-        </p>
-      </div>
-
-      {/* Controles de Búsqueda y Filtros */}
+    <div className={styles.wrapper}>
       <div className={styles.controls}>
         <div className={styles.searchBox}>
           <span className={styles.searchIcon} aria-hidden="true">
-            <SearchIcon size={18} />
+            <SearchIcon size={20} />
           </span>
           <input
             type="search"
             aria-label="Buscar especialidad o médico"
             className={styles.searchInput}
-            placeholder="Buscar especialidad o médico (ej. Traumatología, Cardiología, Pediatría)..."
+            placeholder="Busca tu especialidad o médico"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           {searchTerm && (
             <button className={styles.clearSearch} onClick={() => setSearchTerm("")} aria-label="Limpiar búsqueda">
-              <CloseIcon size={14} />
+              <CloseIcon size={16} />
             </button>
           )}
         </div>
 
         <div className={styles.filterTabs} role="group" aria-label="Filtrar por disponibilidad">
-          <button
-            className={`${styles.filterTab} ${activeFilter === "all" ? styles.activeTab : ""}`}
-            aria-pressed={activeFilter === "all"}
-            onClick={() => setActiveFilter("all")}
-          >
-            Todas ({counts.all})
-          </button>
-          <button
-            className={`${styles.filterTab} ${styles.availableTab} ${activeFilter === "available" ? styles.activeTab : ""}`}
-            aria-pressed={activeFilter === "available"}
-            onClick={() => setActiveFilter("available")}
-          >
-            <span className={styles.statusDotAvailable} /> Disponibles ({counts.available})
-          </button>
-          <button
-            className={`${styles.filterTab} ${styles.fewTab} ${activeFilter === "few" ? styles.activeTab : ""}`}
-            aria-pressed={activeFilter === "few"}
-            onClick={() => setActiveFilter("few")}
-          >
-            <span className={styles.statusDotFew} /> Últimos Cupos ({counts.few})
-          </button>
-          <button
-            className={`${styles.filterTab} ${styles.exhaustedTab} ${activeFilter === "exhausted" ? styles.activeTab : ""}`}
-            aria-pressed={activeFilter === "exhausted"}
-            onClick={() => setActiveFilter("exhausted")}
-          >
-            <span className={styles.statusDotExhausted} /> Agotados ({counts.exhausted})
-          </button>
+          {FILTERS.map((f) => (
+            <button
+              key={f.id}
+              type="button"
+              aria-pressed={activeFilter === f.id}
+              className={`${styles.filterTab} ${activeFilter === f.id ? styles.activeTab : ""}`}
+              onClick={() => setActiveFilter(f.id)}
+            >
+              {f.dot && <span className={`${styles.dot} ${styles[f.dot]}`} aria-hidden="true" />}
+              {f.label} ({counts[f.id]})
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Grilla de Especialidades */}
+      <p className={styles.summary}>
+        {counts.available + counts.few} de {counts.all} especialidades tienen cupos. Toca una para ver el detalle.
+      </p>
+
       {filteredSpecialties.length > 0 ? (
-        <div className={styles.grid}>
+        <div className={styles.list}>
           {filteredSpecialties.map((spec) => (
-            <SpecialtyCard key={spec.id} specialty={spec} onBook={onBookSpecialty} />
+            <SpecialtyCard
+              key={spec.id}
+              specialty={spec}
+              onBook={onBookSpecialty}
+              dayLabel={dayLabel}
+              isOpen={openId === spec.id}
+              onToggle={() => setOpenId(openId === spec.id ? null : spec.id)}
+            />
           ))}
         </div>
       ) : (
         <div className={styles.emptyState}>
-          <span className={styles.emptyIcon} aria-hidden="true">
-            <SearchIcon size={36} color="var(--text-muted)" />
-          </span>
-          <h4>No se encontraron especialidades</h4>
-          <p>Intenta con otro término de búsqueda o cambia el filtro de disponibilidad.</p>
+          <SearchIcon size={32} color="var(--brand)" />
+          <h4>No encontramos esa especialidad</h4>
+          <p>Prueba con otra palabra o cambia el filtro.</p>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => {
+              setSearchTerm("");
+              setActiveFilter("all");
+            }}
+          >
+            Ver todas las especialidades
+          </button>
         </div>
       )}
-    </section>
+    </div>
   );
 };

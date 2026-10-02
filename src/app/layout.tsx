@@ -20,25 +20,24 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "FichaYa Bolivia | Sistema de Turnos y Semáforo de Fichas Hospitalarias",
+  title: "Sinfi | Reserva tu ficha médica sin filas",
   description:
-    "Solución contra las filas de madrugada en hospitales públicos de Bolivia (Tarija, La Paz, Santa Cruz, Cochabamba). Consulta cupos en tiempo real y asegura tu ficha médica con tu Carnet de Identidad.",
+    "Mira tu cupo antes de salir de casa, reserva tu ficha con tu carnet y llega a la hora que te damos. Hospitales públicos de Bolivia.",
   keywords: [
-    "Ficha hospital Bolivia",
-    "Ficha medica Tarija",
-    "Hospital de Clinicas La Paz",
+    "ficha médica Bolivia",
+    "ficha hospital Tarija",
     "Hospital San Juan de Dios Tarija",
-    "Cero filas de madrugada",
+    "sin filas",
     "SUS Bolivia",
   ],
-  authors: [{ name: "FichaYa Bolivia Team" }],
+  authors: [{ name: "Sinfi" }],
   openGraph: {
-    title: "FichaYa Bolivia | Cero Filas de Madrugada",
+    title: "Sinfi | Sin filas. Atiende a tiempo.",
     description:
-      "Consulta cupos en vivo y reserva tu ficha médica con tu carnet de identidad. Sin madrugar a las 4 AM en el frío.",
+      "Mira tu cupo antes de salir, reserva con tu carnet y nadie te quita tu lugar.",
     type: "website",
     locale: "es_BO",
-    siteName: "FichaYa Bolivia",
+    siteName: "Sinfi",
   },
 };
 
@@ -46,7 +45,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#1d3f8a",
+  themeColor: "#000080",
 };
 
 export default function RootLayout({

@@ -1,0 +1,44 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--logo-size) * 0.3);
+}
+
+.word {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--logo-size);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.check {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.main {
+  color: var(--brand);
+}
+
+.main .ticket {
+  fill: var(--brand);
+}
+
+.main .check {
+  stroke: var(--bg);
+}
+
+.inverse {
+  color: var(--on-brand);
+}
+
+.inverse .ticket {
+  fill: var(--on-brand);
+}
+
+.inverse .check {
+  stroke: var(--brand);
+}

@@ -1,0 +1,42 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Inter:wght@500&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:var(--bg)}
+  svg{display:block}
+  .ground{fill:var(--bg)}
+  .brand{fill:var(--brand)}
+  .tint{fill:var(--line)}
+  .ok{fill:var(--state-ok)}
+  .warn{fill:var(--state-warn)}
+  .danger{fill:var(--state-danger)}
+  .slab{rx:var(--radius-lg)}
+  .tile{rx:var(--radius-md)}
+  .check{fill:none;stroke:var(--bg);stroke-width:14;stroke-linecap:round;stroke-linejoin:round}
+  .name{font-family:var(--font-display);font-weight:800;font-size:120px;fill:var(--brand);letter-spacing:-0.03em}
+  .tag{font-family:var(--font-text);font-weight:500;font-size:14px;fill:var(--muted)}
+</style></head>
+<body>
+<svg width="960" height="288" viewBox="0 0 960 288" role="img" aria-label="Sinfi">
+<!-- derivation
+blocks: brand 280x240 (radius-lg) as the tall slab; line tint 144x104, state-ok/warn/danger 144x36 each (radius-md), signals kept small.
+arrangement: one tall slab at left of the box with a stacked column of satellites on the right, all right of x=480.
+pattern: ticket motif (brand says "ficha con muesca") — ground-colored notch discs cut into the slab and tiles at their left edge, plus a check on the slab.
+steps/radii: 8/12/16/24 spacing steps, radius-lg on slab, radius-md on tiles, notch radius = 16 and 10. -->
+<rect class="ground" width="960" height="288"/>
+<rect class="brand slab" x="496" y="24" width="280" height="240"/>
+<circle class="ground" cx="496" cy="144" r="16"/>
+<circle class="ground" cx="776" cy="144" r="16"/>
+<path class="check" d="M582 146l40 40 78-92"/>
+<rect class="tint tile" x="792" y="24" width="144" height="104"/>
+<rect class="ok tile" x="792" y="140" width="144" height="36"/>
+<rect class="warn tile" x="792" y="184" width="144" height="36"/>
+<rect class="danger tile" x="792" y="228" width="144" height="36"/>
+<circle class="ground" cx="792" cy="158" r="10"/>
+<circle class="ground" cx="792" cy="202" r="10"/>
+<circle class="ground" cx="792" cy="246" r="10"/>
+<text class="name" x="40" y="220">Sinfi</text>
+<text class="tag" x="44" y="250">Sin filas. Atiende a tiempo.</text>
+</svg>
+</body></html>

@@ -1,9 +1,8 @@
 import React from "react";
 import styles from "./LiveQuotaBanner.module.css";
 import { Hospital } from "@/types/hospital";
-import { calculateQuotaStatus } from "@/lib/services/quotaService";
 import { AudioPlayerButton } from "@/components/common/AudioPlayerButton";
-import { LocationIcon, ShieldCheckIcon } from "@/components/common/Icons";
+import { calculateQuotaStatus, getQuotaStatusDetails } from "@/lib/services/quotaService";
 
 interface LiveQuotaBannerProps {
   hospital: Hospital;
@@ -11,63 +10,89 @@ interface LiveQuotaBannerProps {
   selectedDayLabel?: string;
 }
 
+/** Introducción de la web: qué es Sinfi y, a la derecha, cómo se ve la ficha que obtienes. */
 export const LiveQuotaBanner: React.FC<LiveQuotaBannerProps> = ({
   hospital,
   totalAvailable,
   selectedDayLabel = "Hoy",
 }) => {
-  const audioExplanation = `Estimado paciente del ${hospital.name}: en Tarija y Bolivia no madrugue a las cuatro de la mañana en el frío. Con FichaYa, consulte los cupos libres en tiempo real, elija su especialidad y reserve con su carnet de identidad. Llegue quince minutos antes de su turno asignado directamente al consultorio.`;
+  const audioExplanation = `Hola. Con Sinfi sacas tu ficha médica sin madrugar. En el ${hospital.name} miras los cupos libres antes de salir de casa, eliges tu especialidad y reservas con tu carnet de identidad. Te damos una hora de llegada: preséntate quince minutos antes, directo al consultorio.`;
 
-  const counterStatus = calculateQuotaStatus(totalAvailable);
+  const status = calculateQuotaStatus(totalAvailable);
+  const statusDetails = getQuotaStatusDetails(status, totalAvailable);
+  const dayText = selectedDayLabel.toLowerCase();
+  const dayPhrase = dayText === "hoy" || dayText === "mañana" ? dayText : `el ${dayText}`;
+
+  const goToSpecialties = () => {
+    document.getElementById("elige-especialidad")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
-    <section className={styles.banner}>
-      <div className={styles.headerRow}>
-        <div className={styles.hospitalMeta}>
-          <div className={styles.badgeRow}>
-            <span className={styles.hospitalBadge}>{hospital.level}</span>
-            <span className={styles.hospitalBadge}>{hospital.city}</span>
-            <span className={styles.systemPill}>{hospital.system} gratuito</span>
-          </div>
-          <h1 className={styles.hospitalName}>{hospital.name}</h1>
-          <p className={styles.hospitalAddress}>
-            <span className={styles.addressItem}>
-              <LocationIcon size={14} /> {hospital.address}
-            </span>
-            <span className={styles.addressItem}>
-              Atención: <strong>{hospital.openingHours}</strong>
-            </span>
-          </p>
+    <section className={styles.hero} aria-labelledby="hero-title">
+      <div className={styles.copy}>
+        <h1 id="hero-title" className={styles.title}>Tu ficha médica, sin madrugar.</h1>
+        <p className={styles.promise}>
+          Mira los cupos antes de salir de casa, reserva con tu carnet y llega a la hora que te damos.
+          Nadie te quita tu lugar.
+        </p>
+
+        <div className={styles.ctaRow}>
+          <button type="button" className={styles.cta} onClick={goToSpecialties}>
+            Ver cupos de hoy
+          </button>
+          <AudioPlayerButton
+            variant="banner"
+            label="Escuchar en Voz Alta"
+            messageToRead={audioExplanation}
+          />
         </div>
 
-        <div className={styles.quotaCounter} aria-live="polite">
-          <span className={styles.counterLabel}>Cupos libres</span>
-          <div className={styles.counterNumber}>
-            <span className={`${styles.pulseDot} ${styles[`dot_${counterStatus}`]}`} aria-hidden="true" />
-            <span>{totalAvailable}</span>
-          </div>
-          <span className={styles.counterSub}>{selectedDayLabel}, en tiempo real</span>
-        </div>
+        <p className={`${styles.live} ${styles[`live_${status}`]}`} aria-live="polite">
+          <span className={styles.liveDot} aria-hidden="true" />
+          <span>
+            <strong>{totalAvailable}</strong> {totalAvailable === 1 ? "cupo libre" : "cupos libres"} {dayPhrase}
+            <span className="visually-hidden">, {statusDetails.badgeText}</span>
+          </span>
+        </p>
       </div>
 
-      <div className={styles.alertNotice}>
-        <div className={styles.alertIcon}>
-          <ShieldCheckIcon size={24} color="#fef08a" />
-        </div>
-        <div className={styles.alertContent}>
-          <div className={styles.alertTitleRow}>
-            <strong>¡Tu derecho a la salud sin filas de madrugada ni frío!</strong>
-            <AudioPlayerButton
-              variant="banner"
-              label="Escuchar en Voz Alta"
-              messageToRead={audioExplanation}
-            />
+      {/* Ficha de ejemplo: muestra el resultado antes de empezar */}
+      <figure className={styles.sample} aria-label="Ejemplo de ficha digital">
+        <div className={styles.ticket}>
+          <div className={styles.ticketHead}>
+            <div>
+              <span className={styles.ticketEsp}>Pediatría</span>
+              <span className={styles.ticketHosp}>{hospital.city}</span>
+            </div>
+            <div className={styles.ticketTurno}>
+              <span>Turno</span>
+              <strong>14</strong>
+            </div>
           </div>
-          <p>
-            Elige tu especialidad y reserva con tu Carnet de Identidad. El sistema te asignará una <strong>hora exacta sugerida de llegada</strong>. Solo debes presentarte 15 minutos antes directamente en consultorio.
-          </p>
+
+          <div className={styles.ticketBody}>
+            <span className={styles.ticketKey}>Llega a las</span>
+            <span className={styles.ticketTime}>08:45</span>
+          </div>
+
+          <div className={styles.ticketCut} aria-hidden="true" />
+
+          <div className={styles.ticketFoot}>
+            <svg className={styles.ticketQr} viewBox="0 0 9 9" aria-hidden="true" shapeRendering="crispEdges">
+              <rect width="9" height="9" fill="var(--surface)" />
+              <g fill="var(--brand)">
+                <path d="M0 0h3v3H0zM6 0h3v3H6zM0 6h3v3H0z" />
+                <path d="M4 0h1v1H4zM4 2h1v2H4zM5 4h2v1H5zM3 4h1v1H3zM6 6h1v1H6zM8 6h1v1H8zM5 7h1v2H5zM7 8h2v1H7zM4 5h1v1H4z" />
+              </g>
+              <g fill="var(--surface)">
+                <path d="M1 1h1v1H1zM7 1h1v1H7zM1 7h1v1H1z" />
+              </g>
+            </svg>
+            <span className={styles.ticketNote}>Preséntate 15 minutos antes.</span>
+          </div>
         </div>
-      </div>
+        <figcaption className={styles.caption}>Así se ve tu ficha</figcaption>
+      </figure>
     </section>
   );
 };

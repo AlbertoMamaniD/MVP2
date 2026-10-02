@@ -2,10 +2,10 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 14px;
+  min-height: 44px;
+  padding: 0 16px;
   border-radius: var(--radius-full);
-  font-size: 0.82rem;
-  font-weight: 700;
+  font: var(--type-label);
   cursor: pointer;
   transition: all 0.2s ease;
   line-height: 1;
@@ -16,9 +16,9 @@
 }
 
 .subtle {
-  background-color: var(--primary-50);
-  border: 1px solid var(--primary-200);
-  color: var(--primary-800);
+  background-color: var(--surface);
+  border: 2px solid var(--brand);
+  color: var(--brand);
 }
 
 .subtle:hover {
@@ -27,20 +27,19 @@
 }
 
 .banner {
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  color: #ffffff;
-  backdrop-filter: blur(8px);
+  background-color: transparent;
+  border: 2px solid var(--on-brand);
+  color: var(--on-brand);
 }
 
 .banner:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: color-mix(in srgb, var(--on-brand) 14%, transparent);
 }
 
 .primary {
   background-color: var(--primary-600);
   color: #ffffff;
-  box-shadow: 0 2px 8px rgb(13 148 136 / 0.25);
+  box-shadow: none;
 }
 
 .primary:hover {
@@ -48,9 +47,9 @@
 }
 
 .playing {
-  background-color: #fef08a !important;
-  color: #854d0e !important;
-  border-color: #eab308 !important;
+  background-color: var(--on-brand) !important;
+  color: var(--brand) !important;
+  border-color: var(--on-brand) !important;
 }
 
 .wave {

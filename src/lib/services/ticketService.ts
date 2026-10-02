@@ -3,7 +3,7 @@ import { Specialty } from "@/types/specialty";
 import { Hospital } from "@/types/hospital";
 import { MOCK_SPECIALTIES } from "@/lib/data/mockSpecialties";
 import { MOCK_HOSPITALS } from "@/lib/data/mockHospitals";
-import { calculateEstimatedArrival, normalizeCI } from "@/lib/utils/formatters";
+import { calculateEstimatedArrival, normalizeCI, toLocalIsoDate } from "@/lib/utils/formatters";
 import { calculateQuotaStatus } from "@/lib/services/quotaService";
 
 const STORAGE_KEYS = {
@@ -69,8 +69,8 @@ export class TicketService {
   }
 
   // Regla de Negocio: 1 ficha por CI por especialidad por día
-  static hasActiveBooking(ci: string, specialtyId: string): boolean {
-    const today = new Date().toISOString().split("T")[0];
+  static hasActiveBooking(ci: string, specialtyId: string, date: string = toLocalIsoDate(new Date())): boolean {
+    const today = date;
     const norm = normalizeCI(ci);
     const tickets = this.getAllTickets();
     return tickets.some(
@@ -91,10 +91,12 @@ export class TicketService {
     }
 
     // Regla anti-reventa: Un carnet no puede sacar 2 turnos para la misma especialidad el mismo día
-    if (this.hasActiveBooking(normCI, payload.specialtyId)) {
+    const bookingDate = payload.date || toLocalIsoDate(new Date());
+
+    if (this.hasActiveBooking(normCI, payload.specialtyId, bookingDate)) {
       return {
         success: false,
-        error: `El carnet ${normCI} ya tiene una ficha reservada hoy para esta especialidad. Cada paciente tiene derecho a 1 cupo por día.`,
+        error: `El carnet ${normCI} ya tiene una ficha de esta especialidad para ese día. Cada persona puede reservar una por día.`,
       };
     }
 
@@ -149,7 +151,7 @@ export class TicketService {
       estimatedArrival: arrival,
       estimatedConsultation: consultation,
       status: "confirmed",
-      date: new Date().toISOString().split("T")[0],
+      date: bookingDate,
       createdAt: new Date().toISOString(),
       qrPayload: `FICHAYA|${ticketId}|${normCI}|${specialty.code}|${arrival}|${tokenCode}`,
     };

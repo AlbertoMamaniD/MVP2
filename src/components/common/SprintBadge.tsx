@@ -43,7 +43,7 @@ export const SprintBadge: React.FC = () => {
 
             <div className={styles.card}>
               <span className={styles.cardTitle}>
-                <ClockIcon size={14} color="#0f766e" /> Success Metric
+                <ClockIcon size={14} color="var(--brand)" /> Success Metric
               </span>
               <p className={styles.cardBody}>
                 Un usuario nuevo completa la reserva de principio a fin en <strong>menos de 2 minutos</strong> y sin requerir asistencia.

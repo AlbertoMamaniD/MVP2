@@ -26,4 +26,5 @@ export interface BookingPayload {
   patientName: string;
   ci: string;
   phone: string;
+  date?: string; // "YYYY-MM-DD" elegido en el calendario; por defecto, hoy
 }
