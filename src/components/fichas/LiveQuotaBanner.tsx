@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./LiveQuotaBanner.module.css";
 import { Hospital } from "@/types/hospital";
+import { calculateQuotaStatus } from "@/lib/services/quotaService";
 import { AudioPlayerButton } from "@/components/common/AudioPlayerButton";
 import { LocationIcon, ShieldCheckIcon } from "@/components/common/Icons";
 
@@ -17,27 +18,35 @@ export const LiveQuotaBanner: React.FC<LiveQuotaBannerProps> = ({
 }) => {
   const audioExplanation = `Estimado paciente del ${hospital.name}: en Tarija y Bolivia no madrugue a las cuatro de la mañana en el frío. Con FichaYa, consulte los cupos libres en tiempo real, elija su especialidad y reserve con su carnet de identidad. Llegue quince minutos antes de su turno asignado directamente al consultorio.`;
 
+  const counterStatus = calculateQuotaStatus(totalAvailable);
+
   return (
     <section className={styles.banner}>
       <div className={styles.headerRow}>
         <div className={styles.hospitalMeta}>
           <div className={styles.badgeRow}>
-            <span className={styles.hospitalBadge}>{hospital.level} · {hospital.city}</span>
-            <span className={styles.systemPill}>{hospital.system} GRATUITO</span>
+            <span className={styles.hospitalBadge}>{hospital.level}</span>
+            <span className={styles.hospitalBadge}>{hospital.city}</span>
+            <span className={styles.systemPill}>{hospital.system} gratuito</span>
           </div>
           <h1 className={styles.hospitalName}>{hospital.name}</h1>
           <p className={styles.hospitalAddress}>
-            <LocationIcon size={14} /> {hospital.address} · Atención: <strong>{hospital.openingHours}</strong>
+            <span className={styles.addressItem}>
+              <LocationIcon size={14} /> {hospital.address}
+            </span>
+            <span className={styles.addressItem}>
+              Atención: <strong>{hospital.openingHours}</strong>
+            </span>
           </p>
         </div>
 
-        <div className={styles.quotaCounter}>
-          <span className={styles.counterLabel}>Cupos Libres {selectedDayLabel}</span>
+        <div className={styles.quotaCounter} aria-live="polite">
+          <span className={styles.counterLabel}>Cupos libres</span>
           <div className={styles.counterNumber}>
-            <span className={styles.pulseDot} />
+            <span className={`${styles.pulseDot} ${styles[`dot_${counterStatus}`]}`} aria-hidden="true" />
             <span>{totalAvailable}</span>
           </div>
-          <span className={styles.counterSub}>En tiempo real · Cero filas</span>
+          <span className={styles.counterSub}>{selectedDayLabel}, en tiempo real</span>
         </div>
       </div>
 

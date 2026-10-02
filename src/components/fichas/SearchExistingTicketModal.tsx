@@ -48,6 +48,8 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
           <div className={styles.searchRow}>
             <input
               type="text"
+              inputMode="numeric"
+              aria-label="Carnet de Identidad"
               className={styles.input}
               placeholder="Ej. 6849201"
               value={ciInput}
@@ -65,7 +67,9 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
             {searchResults.length > 0 ? (
               <div className={styles.resultsList}>
                 <span className={styles.resultsCount}>
-                  Se encontraron {searchResults.length} ficha(s) activa(s):
+                  {searchResults.length === 1
+                    ? "Encontramos 1 ficha activa"
+                    : `Encontramos ${searchResults.length} fichas activas`}
                 </span>
                 {searchResults.map((t) => (
                   <div key={t.id} className={styles.ticketResultCard}>
@@ -92,7 +96,7 @@ export const SearchExistingTicketModal: React.FC<SearchExistingTicketModalProps>
               </div>
             ) : (
               <div className={styles.notFound}>
-                <span className={styles.notFoundIcon}>
+                <span className={styles.notFoundIcon} aria-hidden="true">
                   <AlertTriangleIcon size={24} color="var(--text-muted)" />
                 </span>
                 <p>

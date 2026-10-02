@@ -40,15 +40,23 @@ export const SpecialtyList: React.FC<SpecialtyListProps> = ({ specialties, onBoo
   }, [specialties]);
 
   return (
-    <div className={styles.wrapper}>
+    <section className={styles.wrapper} aria-labelledby="specialties-title">
+      <div className={styles.sectionHeader}>
+        <h2 id="specialties-title" className={styles.sectionTitle}>Especialidades</h2>
+        <p className={styles.sectionSummary}>
+          {counts.available + counts.few} de {counts.all} con cupos para reservar
+        </p>
+      </div>
+
       {/* Controles de Búsqueda y Filtros */}
       <div className={styles.controls}>
         <div className={styles.searchBox}>
-          <span className={styles.searchIcon}>
+          <span className={styles.searchIcon} aria-hidden="true">
             <SearchIcon size={18} />
           </span>
           <input
-            type="text"
+            type="search"
+            aria-label="Buscar especialidad o médico"
             className={styles.searchInput}
             placeholder="Buscar especialidad o médico (ej. Traumatología, Cardiología, Pediatría)..."
             value={searchTerm}
@@ -61,27 +69,31 @@ export const SpecialtyList: React.FC<SpecialtyListProps> = ({ specialties, onBoo
           )}
         </div>
 
-        <div className={styles.filterTabs}>
+        <div className={styles.filterTabs} role="group" aria-label="Filtrar por disponibilidad">
           <button
             className={`${styles.filterTab} ${activeFilter === "all" ? styles.activeTab : ""}`}
+            aria-pressed={activeFilter === "all"}
             onClick={() => setActiveFilter("all")}
           >
             Todas ({counts.all})
           </button>
           <button
             className={`${styles.filterTab} ${styles.availableTab} ${activeFilter === "available" ? styles.activeTab : ""}`}
+            aria-pressed={activeFilter === "available"}
             onClick={() => setActiveFilter("available")}
           >
             <span className={styles.statusDotAvailable} /> Disponibles ({counts.available})
           </button>
           <button
             className={`${styles.filterTab} ${styles.fewTab} ${activeFilter === "few" ? styles.activeTab : ""}`}
+            aria-pressed={activeFilter === "few"}
             onClick={() => setActiveFilter("few")}
           >
             <span className={styles.statusDotFew} /> Últimos Cupos ({counts.few})
           </button>
           <button
             className={`${styles.filterTab} ${styles.exhaustedTab} ${activeFilter === "exhausted" ? styles.activeTab : ""}`}
+            aria-pressed={activeFilter === "exhausted"}
             onClick={() => setActiveFilter("exhausted")}
           >
             <span className={styles.statusDotExhausted} /> Agotados ({counts.exhausted})
@@ -98,13 +110,13 @@ export const SpecialtyList: React.FC<SpecialtyListProps> = ({ specialties, onBoo
         </div>
       ) : (
         <div className={styles.emptyState}>
-          <span className={styles.emptyIcon}>
+          <span className={styles.emptyIcon} aria-hidden="true">
             <SearchIcon size={36} color="var(--text-muted)" />
           </span>
           <h4>No se encontraron especialidades</h4>
           <p>Intenta con otro término de búsqueda o cambia el filtro de disponibilidad.</p>
         </div>
       )}
-    </div>
+    </section>
   );
 };

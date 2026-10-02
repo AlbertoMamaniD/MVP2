@@ -6,6 +6,15 @@ import { Badge } from "@/components/common/Badge";
 import { RefreshIcon, CheckIcon, AlertTriangleIcon } from "@/components/common/Icons";
 import styles from "./ValidationScanner.module.css";
 
+// Convierte "08:45 AM" en minutos desde medianoche para ordenar por hora de llegada
+const arrivalToMinutes = (time: string): number => {
+  const match = time.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!match) return Number.MAX_SAFE_INTEGER;
+  const [, h, m, period] = match;
+  const hours = (Number(h) % 12) + (period.toUpperCase() === "PM" ? 12 : 0);
+  return hours * 60 + Number(m);
+};
+
 interface ValidationScannerProps {
   tickets: MedicalTicket[];
   onCheckIn: (ticketId: string) => { success: boolean; message: string };
@@ -30,22 +39,24 @@ export const ValidationScanner: React.FC<ValidationScannerProps> = ({
     setTimeout(() => setFeedback(null), 4000);
   };
 
-  const filteredTickets = tickets.filter((t) => {
-    const q = searchQuery.toLowerCase().trim();
-    return (
-      t.ci.toLowerCase().includes(q) ||
-      t.patientName.toLowerCase().includes(q) ||
-      t.tokenCode.toLowerCase().includes(q) ||
-      t.specialtyName.toLowerCase().includes(q)
-    );
-  });
+  const filteredTickets = tickets
+    .filter((t) => {
+      const q = searchQuery.toLowerCase().trim();
+      return (
+        t.ci.toLowerCase().includes(q) ||
+        t.patientName.toLowerCase().includes(q) ||
+        t.tokenCode.toLowerCase().includes(q) ||
+        t.specialtyName.toLowerCase().includes(q)
+      );
+    })
+    .sort((a, b) => arrivalToMinutes(a.estimatedArrival) - arrivalToMinutes(b.estimatedArrival));
 
   return (
     <div className={styles.wrapper}>
       {/* Cabecera del Módulo */}
       <div className={styles.header}>
         <div>
-          <span className={styles.badge}>MÓDULO DE ADMISIÓN Y VENTANILLA</span>
+          <span className={styles.badge}>Módulo de admisión y ventanilla</span>
           <h2 className={styles.title}>Control de Asistencia y Validación de Fichas</h2>
           <p className={styles.subtitle}>
             Verifica el Carnet de Identidad del paciente al llegar para derivarlo al consultorio.
@@ -59,7 +70,7 @@ export const ValidationScanner: React.FC<ValidationScannerProps> = ({
       </div>
 
       {feedback && (
-        <div className={`${styles.feedback} ${styles[feedback.type]}`}>
+        <div className={`${styles.feedback} ${styles[feedback.type]}`} role="status">
           {feedback.type === "success" ? <CheckIcon size={16} /> : <AlertTriangleIcon size={16} />}
           <span>{feedback.text}</span>
         </div>
@@ -67,10 +78,12 @@ export const ValidationScanner: React.FC<ValidationScannerProps> = ({
 
       {/* Buscador Rápido por Carnet o Código */}
       <div className={styles.searchSection}>
-        <label className={styles.searchLabel}>Digita el C.I. o Código del Ticket:</label>
+        <label htmlFor="staff-search" className={styles.searchLabel}>Digita el C.I. o código del ticket</label>
         <div className={styles.searchRow}>
           <input
+            id="staff-search"
             type="text"
+            autoComplete="off"
             className={styles.searchInput}
             placeholder="Ej. 6849201 o BOL-8912..."
             value={searchQuery}
@@ -103,9 +116,8 @@ export const ValidationScanner: React.FC<ValidationScannerProps> = ({
                 <div className={styles.colPatient}>
                   <div className={styles.patientName}>{t.patientName}</div>
                   <div className={styles.patientMeta}>
-                    <span>CI: <strong>{t.ci}</strong></span>
-                    <span>·</span>
-                    <span>Cód: <code>{t.tokenCode}</code></span>
+                    <span>CI <strong>{t.ci}</strong></span>
+                    <span>Código <code>{t.tokenCode}</code></span>
                   </div>
                 </div>
 

@@ -11,21 +11,21 @@ export function getQuotaStatusDetails(status: QuotaStatus, available: number) {
     case "available":
       return {
         label: `${available} cupos disponibles`,
-        badgeText: "DISPONIBLE",
+        badgeText: "Disponible",
         variant: "success" as const,
         description: "Hay fichas libres para hoy. Puedes reservar tu hora sin madrugar.",
       };
     case "few":
       return {
-        label: `¡Solo quedan ${available} cupo${available === 1 ? "" : "s"}!`,
-        badgeText: "ÚLTIMOS CUPOS",
+        label: available === 1 ? "¡Solo queda 1 cupo!" : `¡Solo quedan ${available} cupos!`,
+        badgeText: "Últimos cupos",
         variant: "warning" as const,
         description: "Alta demanda en esta especialidad. Reserva antes de que se agote.",
       };
     case "exhausted":
       return {
         label: "Cupos agotados por hoy",
-        badgeText: "AGOTADO",
+        badgeText: "Agotado",
         variant: "danger" as const,
         description: "No madrugues ni te traslades al hospital; no habrá atención presencial adicional hoy.",
       };

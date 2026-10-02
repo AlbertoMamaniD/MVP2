@@ -21,18 +21,20 @@ export const DaySelector: React.FC<DaySelectorProps> = ({
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <span className={styles.label}>
-          <CalendarIcon size={16} /> 1. Selecciona el día de tu atención:
+          <CalendarIcon size={16} /> Selecciona el día de tu atención
         </span>
         <span className={styles.subtext}>Cupos limitados por jornada</span>
       </div>
 
-      <div className={styles.dayGrid}>
+      <div className={styles.dayGrid} role="radiogroup" aria-label="Día de atención">
         {days.map((day) => {
           const isSelected = day.id === selectedDayId;
           return (
             <button
               key={day.id}
               type="button"
+              role="radio"
+              aria-checked={isSelected}
               className={`${styles.dayCard} ${isSelected ? styles.selected : ""}`}
               onClick={() => onSelectDay(day.id)}
             >
@@ -42,7 +44,7 @@ export const DaySelector: React.FC<DaySelectorProps> = ({
               </div>
               <span className={styles.dayFullName}>{day.dayName}</span>
               <div className={styles.indicatorRow}>
-                <span className={styles.dot} />
+                <span className={styles.dot} aria-hidden="true" />
                 <span className={styles.statusText}>Cupos habilitados</span>
               </div>
             </button>

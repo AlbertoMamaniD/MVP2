@@ -1,14 +1,19 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(4px);
+  background-color: var(--bg-overlay);
+  backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-md);
   z-index: 100;
-  animation: fadeIn 0.2s ease-out;
+  animation: overlayIn 0.18s ease-out;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modalCard {
@@ -18,40 +23,46 @@
   max-width: 520px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-light);
+  overscroll-behavior: contain;
+  box-shadow: var(--shadow-xl);
   display: flex;
   flex-direction: column;
+  animation: fadeIn 0.24s var(--ease-out);
 }
 
 .modalHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-md) var(--space-lg);
+  gap: 12px;
+  padding: 18px var(--space-lg) 14px;
   border-bottom: 1px solid var(--border-light);
-  background-color: var(--bg-subtle);
+  background-color: var(--bg-surface);
 }
 
 .modalTitle {
-  font-size: 1.15rem;
+  font-size: var(--text-lg);
   font-weight: 700;
+  line-height: 1.25;
   color: var(--text-primary);
 }
 
 .closeButton {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-secondary);
-  font-size: 1rem;
+  color: var(--text-muted);
 }
 
 .closeButton:hover {
-  background-color: var(--border-light);
+  background-color: var(--bg-subtle);
   color: var(--text-primary);
 }
 
@@ -59,17 +70,24 @@
   padding: var(--space-lg);
 }
 
+/* En pantallas pequeñas el modal se comporta como hoja inferior */
 @media (max-width: 480px) {
+  .overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
   .modalCard {
-    max-height: 95vh;
-    border-radius: var(--radius-md);
+    max-height: 94vh;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
 
   .modalHeader {
-    padding: var(--space-sm) var(--space-md);
+    padding: 16px var(--space-md) 12px;
   }
 
   .modalBody {
     padding: var(--space-md);
+    padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom));
   }
 }

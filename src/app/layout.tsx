@@ -20,7 +20,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "FichaYa Bolivia · Sistema de Turnos y Semáforo de Fichas Hospitalarias",
+  title: "FichaYa Bolivia | Sistema de Turnos y Semáforo de Fichas Hospitalarias",
   description:
     "Solución contra las filas de madrugada en hospitales públicos de Bolivia (Tarija, La Paz, Santa Cruz, Cochabamba). Consulta cupos en tiempo real y asegura tu ficha médica con tu Carnet de Identidad.",
   keywords: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "FichaYa Bolivia Team" }],
   openGraph: {
-    title: "FichaYa Bolivia · Cero Filas de Madrugada",
+    title: "FichaYa Bolivia | Cero Filas de Madrugada",
     description:
       "Consulta cupos en vivo y reserva tu ficha médica con tu carnet de identidad. Sin madrugar a las 4 AM en el frío.",
     type: "website",
@@ -46,7 +46,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#0f766e",
+  themeColor: "#1d3f8a",
 };
 
 export default function RootLayout({

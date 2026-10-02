@@ -6,17 +6,19 @@ import { formatCurrentDate } from "@/lib/utils/formatters";
 import { SearchExistingTicketModal } from "@/components/fichas/SearchExistingTicketModal";
 import { SearchIcon } from "@/components/common/Icons";
 import { MedicalTicket } from "@/types/ticket";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 
 interface HeaderProps {
   activeTab?: "home" | "my-tickets" | "staff";
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeTab = "home" }) => {
+export const Header: React.FC<HeaderProps> = ({ activeTab }) => {
   const [mounted, setMounted] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const currentTab = activeTab ?? (pathname?.startsWith("/personal") ? "staff" : "home");
 
   useEffect(() => {
     setMounted(true);
@@ -47,17 +49,17 @@ export const Header: React.FC<HeaderProps> = ({ activeTab = "home" }) => {
                     <span className={styles.stripeYellow} />
                     <span className={styles.stripeGreen} />
                   </span>
-                  BOLIVIA
+                  Bolivia
                 </span>
               </div>
-              <span className={styles.brandSubtitle}>Cero Filas de Madrugada · SUS & Salud Pública</span>
+              <span className={styles.brandSubtitle}>Fichas médicas sin filas de madrugada</span>
             </div>
           </Link>
 
           <div className={styles.rightNav}>
             {mounted && (
               <div className={styles.liveClock}>
-                <span className={styles.liveDot} />
+                <span className={styles.liveDot} aria-hidden="true" />
                 <span className={styles.dateText}>{formatCurrentDate()}</span>
               </div>
             )}
@@ -67,21 +69,22 @@ export const Header: React.FC<HeaderProps> = ({ activeTab = "home" }) => {
               className={styles.searchPill}
               onClick={() => setIsSearchOpen(true)}
               title="Buscar ficha guardada con Carnet de Identidad"
+              aria-label="Ver Mi Ficha"
             >
               <SearchIcon size={14} />
               <span>Ver Mi Ficha</span>
             </button>
 
-            <nav className={styles.navLinks}>
+            <nav className={styles.navLinks} aria-label="Secciones">
               <Link
                 href="/"
-                className={`${styles.navLink} ${activeTab === "home" ? styles.active : ""}`}
+                className={`${styles.navLink} ${currentTab === "home" ? styles.active : ""}`}
               >
                 Semáforo
               </Link>
               <Link
                 href="/personal"
-                className={`${styles.navLink} ${activeTab === "staff" ? styles.active : ""}`}
+                className={`${styles.navLink} ${currentTab === "staff" ? styles.active : ""}`}
               >
                 Ventanilla
               </Link>
